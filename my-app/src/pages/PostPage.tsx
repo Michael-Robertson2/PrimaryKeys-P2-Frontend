@@ -1,4 +1,4 @@
-function Post(){
+function PostPage(){
     return (
         <div>
             Post PAGE YOOOOO!
@@ -7,4 +7,4 @@ function Post(){
 }
 
 
-export default Post;
+export default PostPage;
