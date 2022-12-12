@@ -10,7 +10,7 @@ function Navbar() {
           {/* Title */}
           <a className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white hover:opacity-80">
             <Link to={"/"}>
-              Silvester
+              Sylvester
             </Link>
           </a>
         </div>
