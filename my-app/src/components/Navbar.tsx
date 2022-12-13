@@ -41,6 +41,13 @@ function Navbar() {
                 </Link>
               </a>
             </li>
+            <li className="nav-item">
+              <a className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
+                <Link to={"/signup"}>
+                  Signup
+                </Link>
+              </a>
+            </li>
 
           </ul>
         </div>

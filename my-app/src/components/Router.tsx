@@ -5,6 +5,7 @@ import FeedPage from '../pages/FeedPage';
 import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
 import Profile from '../pages/Profile';
+import Signup from '../pages/SignupPage';
 
 function Router(){
     return (
@@ -13,9 +14,8 @@ function Router(){
             <Route path='/feed' element={<FeedPage/>}/>
             <Route path='/profile' element={<Profile />}/>
             <Route path='/login' element={<Login />}/>
+            <Route path='/signup' element={<Signup />}/>
             <Route path='*' element={<ErrorPage />}/>
-
-
         </Routes>
     )
 }
