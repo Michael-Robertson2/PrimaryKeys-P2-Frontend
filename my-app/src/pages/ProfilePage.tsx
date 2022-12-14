@@ -1,6 +1,6 @@
 import { UserIcon } from "@heroicons/react/24/solid";
 
-function Profile(){
+function ProfilePage(){
     const user = null;
 
     return (
@@ -30,4 +30,4 @@ function Profile(){
 }
 
 
-export default Profile;
+export default ProfilePage;
