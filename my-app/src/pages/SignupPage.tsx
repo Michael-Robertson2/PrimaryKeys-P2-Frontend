@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function Signup(){
+function SignupPage(){
     return (
         <form className="flex justify-center items-center" >
             <div className="flex flex-col items-center gap-7 shadow-xl rounded-xl mt-40 px-10 py-10 border-solid border-2">
@@ -19,4 +19,4 @@ function Signup(){
 }
 
 
-export default Signup;
+export default SignupPage;
