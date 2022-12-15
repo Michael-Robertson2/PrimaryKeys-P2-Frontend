@@ -7,6 +7,8 @@ import Login from '../pages/LoginPage';
 import Profile from '../pages/Profile';
 import Signup from '../pages/SignupPage';
 
+import TenorExample from '../pages/TenorExample'
+
 function Router(){
     return (
         <Routes>
@@ -15,6 +17,7 @@ function Router(){
             <Route path='/profile' element={<Profile />}/>
             <Route path='/login' element={<Login />}/>
             <Route path='/signup' element={<Signup />}/>
+            <Route path='/tenor' element={<TenorExample />}/>
             <Route path='*' element={<ErrorPage />}/>
         </Routes>
     )
