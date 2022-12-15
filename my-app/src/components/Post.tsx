@@ -12,6 +12,7 @@ function Post(post: PostContent) {
                 <div>
                     <UserIcon className="inline-block h-5 pr-2"/>
                     <a href="#!" className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.name } </a>    
+
                 </div>
 
                 <a href="#!" className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.date } </a>
@@ -20,6 +21,7 @@ function Post(post: PostContent) {
             <PencilSquareIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" />
             <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" />
         </div>
+
     )
 }
 
