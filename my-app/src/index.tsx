@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Router from './components/Router';
+import PrincipalProvider from './context/PrincipalProvider';
 
 
 
@@ -14,9 +15,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <PrincipalProvider>
     <BrowserRouter>
       <App/>
     </BrowserRouter>
+    </PrincipalProvider>
   </React.StrictMode>
 );
 

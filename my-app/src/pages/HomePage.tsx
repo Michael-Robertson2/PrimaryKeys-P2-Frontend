@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import Post from "../components/Post";
 import PostPreview from "../components/PostPreview";
+import { PrincipalContext } from "../context/PrincipalProvider";
 
 function HomePage() {
+    const principal = useContext(PrincipalContext);
+
+    console.log(principal)
     const posts = [
         {
             id: "ANYTHING GOES",
