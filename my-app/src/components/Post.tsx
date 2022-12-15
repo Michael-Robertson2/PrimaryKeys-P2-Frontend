@@ -7,8 +7,7 @@ import PostContent from "../models/PostContent";
 
 function Post(post: PostContent) {
     return (
-        <li className="pt-8">
-            <div className="md:flex flex-start">
+            <div className="md:flex flex-start pt-8">
                 <div className="block p-6 rounded-lg shadow-lg bg-gray-100  ml-6 mr-6 mb-10">
                     <div className="flex justify-between mb-4">
                         <div>
@@ -23,7 +22,6 @@ function Post(post: PostContent) {
                     <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" />
                 </div>
             </div>
-        </li>
     )
 }
 
