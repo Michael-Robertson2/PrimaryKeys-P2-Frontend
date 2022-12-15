@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import SylvesterAPI from './ApiConfig';
+import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
+import Principal from '../models/Principal';
 
 
 function LoginPage(){
@@ -8,6 +10,8 @@ function LoginPage(){
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
+    const setPrincipal = useContext(SetPrincipalContext);
+    const principal = useContext(PrincipalContext); 
 
     async function submit(e: FormEvent){
         e.preventDefault();
@@ -16,28 +20,25 @@ function LoginPage(){
             password: password
         }).then((response) => {
             setError("")
-            console.log(response.data)
-            navigate("/")
-        })
-            .catch((error) => {
-                setError(error.response.data.message)
-                setTimeout(() =>setError(""),5000)
+            //TODO: check with backend to 
+            let temp = new Principal(response.data.id,  response.data.username, response.data.email, response.data.registered, response.data.roleID, response.data.token, response.data.active)
+            window.sessionStorage.setItem("auth", JSON.stringify(temp));
+            setPrincipal!(temp);
+            navigate("/");
+        }).catch((error) => {
+                setError(error.response.data.message);
+                setTimeout(() =>setError(""),5000);
             });
 
         //console.log("Client attempted login: (Username: " + username + " Password: " + password+ ")");
         setPassword("")
         setUsername("")
-
     }
 
 
 
-
-
-
-
-
     return (
+        
         <form onSubmit={(e)=> submit(e)} className="flex justify-center items-center" >
             <div className="flex flex-col items-center gap-7 shadow-xl rounded-xl mt-40 px-10 py-16">
                 <h1 className="font-serif font-bold text-5xl">Login</h1>
