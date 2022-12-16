@@ -7,12 +7,13 @@ import PostPreview from './components/PostPreview';
 
 function App() {
   return (
-    <div>
+    <div className='min-h-screen flex flex-col h-screen'>
       <Navbar/>
-      <div className='flex flex-col sm:flex-row'>
-        <div className='flex-1'><Router/></div>
-        <div className='bg-green-500 order-first w-64'><PostPreview/></div>
-        <aside className='bg-blue-500 w-64'></aside>
+      <div className='flex-1 flex flex-row overflow-y-hidden'>
+
+        <div className='bg-green-500 overflow-y-aut'><PostPreview/></div>
+        <div className='flex-1 w-80 overflow-y-auto'><Router/></div>
+        <div className='bg-blue-500 w-80 overflow-y-aut'></div>
       </div>
     </div>
   );
