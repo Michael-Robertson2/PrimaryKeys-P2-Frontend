@@ -42,8 +42,8 @@ function LoginPage(){
         <form onSubmit={(e)=> submit(e)} className="flex justify-center items-center" >
             <div className="flex flex-col items-center gap-7 shadow-xl rounded-xl mt-40 px-10 py-16">
                 <h1 className="font-serif font-bold text-5xl">Login</h1>
-                <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" type="text" placeholder="Username" onChange={(e)=> setUsername(e.target.value)}/>
-                <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  type="password" placeholder="Password" onChange={(e)=> setPassword(e.target.value)}/>
+                <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" type="text" placeholder="Username" value={username} onChange={(e)=> setUsername(e.target.value)}/>
+                <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  type="password" placeholder="Password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
                 <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">LOGIN</button>
                 
                 { error ? <p className='text-red-600'>{error}</p>: null }
