@@ -20,7 +20,6 @@ function LoginPage(){
             password: password
         }).then((response) => {
             setError("")
-            //TODO: check with backend to 
             let temp = new Principal(response.data.id,  response.data.username, response.data.email, response.data.registered, response.data.roleID, response.data.token, response.data.active)
             window.sessionStorage.setItem("auth", JSON.stringify(temp));
             setPrincipal!(temp);
