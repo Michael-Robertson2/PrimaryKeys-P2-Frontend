@@ -1,5 +1,7 @@
-import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
+import Principal from '../models/Principal';
 import SylvesterAPI from './ApiConfig';
 
 function SignupPage(){
@@ -10,7 +12,9 @@ function SignupPage(){
     const [name, setName] = useState<string>("");
     const [dob, setDob] = useState<string>("");
     const [error, setError] = useState<string>("");
-
+    const principal = useContext(PrincipalContext);
+    const setPrincipal = useContext(SetPrincipalContext);
+    const navigate = useNavigate();
 
     async function submit(e: FormEvent){
         e.preventDefault();
@@ -22,10 +26,17 @@ function SignupPage(){
             displayName: name,
             birthDate: dob
         }).then((response)=>{
-            //TODO: finish handling response. Response should then call a second async function to create a new profile.
+            setError("")
+            console.log(response.data);
+            let temp = new Principal(response.data.id,  response.data.username, response.data.email, response.data.registered, response.data.roleID, response.data.token, response.data.active)
+            window.sessionStorage.setItem("auth", JSON.stringify(temp));
+            setPrincipal!(temp);
+            navigate("/");
+
         }).catch((error)=>{
             setError(error.response.data.message)
             setTimeout(() =>setError(""),5000);
+            console.log(error.response.data.message);
         });
     }
 
@@ -43,7 +54,7 @@ function SignupPage(){
                 <input type="date" className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder="Date of Birth" value={dob} onChange={(e)=>setDob(e.target.value)} />
                 </div>
                 
-                <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">LOGIN</button>
+                <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">Sign Up!</button>
                 <Link to={"/login"} className="text-blue-700 underline">Already a member? Log in </Link>
             </div>
         </form>
