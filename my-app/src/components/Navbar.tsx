@@ -14,8 +14,8 @@ function Navbar() {
 
 
   return (
-    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gradient-to-r from-slate-800 to-slate-700 ">
-      <div className="container mx-auto flex flex-wrap items-center justify-between pt-3">
+    <nav className="relative flex flex-wrap items-center justify-between px-2 py-4 bg-gradient-to-r from-slate-800 to-slate-700 ">
+      <div className="container mx-auto flex flex-wrap items-center justify-between pt-1">
         <div className="font-serif w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           {/* Title */}
           <a className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white hover:opacity-80">
