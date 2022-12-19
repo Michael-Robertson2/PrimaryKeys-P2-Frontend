@@ -19,3 +19,4 @@ jobs:
 
       - name: Build Artifact
         run: npm run build
+        working-directory: ./my-app
