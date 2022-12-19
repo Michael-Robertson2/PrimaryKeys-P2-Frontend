@@ -15,6 +15,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        working-directory: ./my-app
 
       - name: Build Artifact
         run: npm run build
