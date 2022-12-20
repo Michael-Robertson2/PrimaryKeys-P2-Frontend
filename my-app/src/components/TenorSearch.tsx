@@ -2,18 +2,19 @@ import axios from 'axios';
 
 import { useState, useEffect } from "react";
 
-function TenorSearch () {
-    const [searchTerm, setSearchTerm] = useState<string>("");
+function TenorSearch (props: any) {
+    
     const [searchResults, setSearchResults] = useState<[]>([]);
+    const [imgUrl, setImgUrl] = useState<string>("");
 
     useEffect(() => {
-        console.log(searchResults.length);
-    }, [searchResults]);
+        props.passData(imgUrl);
+    }, [imgUrl]);
 
     async function executingSearch(term: string) {
         const apikey = "AIzaSyDWFvFcdJM08ooKmAx6d2s_Lkem53DNyJA";
         const clientkey = "Sylvester"
-        const limit = 8;
+        const limit = 1;
 
         const search_url = "https://tenor.googleapis.com/v2/search?q=" + term 
                          + "&key=" + apikey + "&client_key=" + clientkey + "&limit=" + limit;
@@ -26,36 +27,54 @@ function TenorSearch () {
     function searchTenor(s: string) {
         if (s.length == 0) {
             setSearchResults([]);
+            setImgUrl("");
         } else {
-            setSearchTerm(s);
             executingSearch(s);
-            console.log(searchResults);    
         }
     }
 
-    function displayResults(results : []) {
+    function displayResults(results : [], myUrl = "") {
         if (results.length > 0) {
             for (var result of results) {
-                var url = result["media_formats"]["gifpreview"]["url"];
-                console.log(url);
-                return <div><img src={ url } /></div>
+                var url = result["media_formats"]["gif"]["url"];
+                setImgUsingUrl(url);
+                return (
+                    <div>
+                        <img id="unique_id_12o3987" src={ url } />
+                    </div>
+                )
             }
-
-            const processed_result = <div>hasResult</div>;
-            return processed_result;
+        } else if (myUrl != "") {
+            return (
+                <div>
+                    <img id="unique_id_12o3987" src={ myUrl } />
+                </div>
+            )
         }
 
-        return <div> Have no results</div>
+        return <div></div>
+    }
+
+    function setImgUsingUrl(s: string) {
+        if (s != imgUrl) {
+            setImgUrl(s);
+        }
     }
 
     return (
         <div>
-            <div className="flex rounded bg-gray-100 shadow-md m-4" >
-                <input className="bg-gray-100 shadow-xl rounded-md px-7 py-2 border-2" 
-                    placeholder="Test" 
+            <div className="flex flex-col rounded bg-gray-100 shadow-md w-full" >
+                <input className="bg-gray-100 rounded-md border-2 w-full" 
+                    placeholder="Enter Search Terms..." 
                     onChange = {(e) => searchTenor(e.target.value)}/>
+                
+                <input className="bg-gray-100 rounded-md border-2 w-full"
+                    id = "unique_id_019876091287"
+                    placeholder= "Enter Image URL..."
+                    value = {imgUrl}
+                    onChange = {(e) => setImgUsingUrl(e.target.value)}/>
             </div>
-            { displayResults(searchResults) }
+            { displayResults(searchResults, imgUrl) }
         </div>
     )
 }
