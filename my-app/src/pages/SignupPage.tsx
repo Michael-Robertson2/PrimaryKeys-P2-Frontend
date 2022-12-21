@@ -55,6 +55,7 @@ function SignupPage(){
                 </div>
                 
                 <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">Sign Up!</button>
+                { error ? <p className='text-red-600'>{error}</p>: null }
                 <Link to={"/login"} className="text-blue-700 underline">Already a member? Log in </Link>
             </div>
         </form>

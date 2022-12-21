@@ -15,7 +15,7 @@ export default function PrincipalProvider({children}: any){
 
     useEffect(()=> {
         const data = window.sessionStorage.getItem("auth");
-    });
+    }, [window.sessionStorage.getItem("auth")]);
 
     return(
     <PrincipalContext.Provider value={principal}>
