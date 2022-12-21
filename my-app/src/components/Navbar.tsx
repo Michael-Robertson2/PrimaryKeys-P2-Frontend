@@ -7,7 +7,7 @@ function Navbar() {
   const principal = useContext(PrincipalContext);
   const setPrincipal = useContext(SetPrincipalContext);
 
-  function logout(){
+  function logout() {
     setPrincipal!(null);
   }
 
@@ -18,65 +18,65 @@ function Navbar() {
       <div className="container mx-auto flex flex-wrap items-center justify-between pt-1">
         <div className="font-serif w-full  flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           {/* Title */}
-          <a className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white hover:opacity-80">
+          <p className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white hover:opacity-80">
             <Link to={"/"}>
               Sylvester
             </Link>
-          </a>
+          </p>
         </div>
 
         <div className="lg:flex flex-grow items-center" id="example-navbar-warning">
           <ul className="flex flex-col lg:flex-row list-none ml-auto">
 
             <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
+              <p className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
                 <Link to={"/feed"}>
                   Feed
                 </Link>
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
-                <Link to={"/profile"}>
-                  Profile
-                </Link>
-              </a>
+              </p>
             </li>
 
             {principal ?
               <>
-              <li className="nav-item">
-                <button onClick={logout} className="bg-slate-800 flex items-center rounded-md text-white ml-5 px-5 py-2 ease-out duration-300 hover:scale-110">
+                <li className="nav-item">
+                  <p className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <Link to={"/profile"}>
+                      Profile
+                    </Link>
+                  </p>
+                </li>
+
+                <li className="nav-item">
+                  <button onClick={logout} className="bg-slate-800 flex items-center rounded-md text-white ml-5 px-5 py-2 ease-out duration-300 hover:scale-110">
                     <Link to={"/login"}>
                       Logout
                     </Link>
                   </button>
-                  
-              </li> 
 
-              <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-s leading-snug text-white ml-2 opacity-70">
+                </li>
+
+                <li className="nav-item">
+                  <p className="px-3 py-2 flex items-center text-s leading-snug text-white ml-2 opacity-70">
                     {principal.username}
-                  </a>
-              </li>
+                  </p>
+                </li>
               </>
-              
+
               :
               <>
                 <li className="nav-item">
-                  <a className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
+                  <p className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
                     <Link to={"/login"}>
                       Login
                     </Link>
-                  </a>
+                  </p>
                 </li>
                 <li className="nav-item">
-                  <a className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
+                  <p className="px-3 py-2 flex items-center text-s uppercase font-bold leading-snug text-white hover:opacity-75">
                     <Link to={"/signup"}>
                       Signup
                     </Link>
-                  </a>
+                  </p>
                 </li>
               </>
             }
