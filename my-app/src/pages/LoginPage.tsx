@@ -20,12 +20,14 @@ function LoginPage(){
             password: password
         }).then((response) => {
             setError("")
+            console.log(response)
             let temp = new Principal(response.data.userId,  response.data.username, response.data.email, response.data.registered, response.data.roleID, response.data.token, response.data.active)
 
             window.sessionStorage.setItem("auth", JSON.stringify(temp));
             setPrincipal!(temp);
             navigate("/");
         }).catch((error) => {
+            console.log(error)
                 setError(error.response.data.message);
                 setTimeout(() =>setError(""),5000);
             });
