@@ -29,7 +29,7 @@ function FeedPage() {
             let resdata = response.data;
             let newPosts: PostResponse[] = new Array();
             for (let i = 0; i < resdata.length; i++) {
-                let post = resdata[i];
+                let post = resdata[resdata.length - 1 - i];
                 let newPost: PostResponse = new PostResponse(post.content, post.imgUrl, post.postId, post.posted);
                 newPosts.push(newPost);
             }
