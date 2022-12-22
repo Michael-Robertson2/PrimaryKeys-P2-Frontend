@@ -56,7 +56,9 @@ function ProfilePage(){
             <div className="border-solid border-4 w-full">
                 <h1>Bio</h1>
                 <div className="border-solid border-4">
-                    {profile?.bio}
+                    {profile === null ? <br/> : (
+                        profile.bio === null ? <br/> : profile.bio
+                    )}
                 </div>
                 
                 <h1>My Post</h1>
