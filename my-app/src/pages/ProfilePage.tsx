@@ -36,6 +36,10 @@ function ProfilePage(){
     return (
         <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
             <div className="flex flex-col w-1/5 items-center border-solid border-4 border-cyan-300 ">
+
+                { /*Implement conditional rendering so this button only appears if user is looking at their own profile page
+                <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">Edit</button>*/ }
+
                 {profile === null ? <UserIcon className="" /> : (
                     profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
                 )}
@@ -52,7 +56,9 @@ function ProfilePage(){
             <div className="border-solid border-4 w-full">
                 <h1>Bio</h1>
                 <div className="border-solid border-4">
-                    {profile?.bio}
+                    {profile === null ? <br/> : (
+                        profile.bio === null ? <br/> : profile.bio
+                    )}
                 </div>
                 
                 <h1>My Post</h1>
