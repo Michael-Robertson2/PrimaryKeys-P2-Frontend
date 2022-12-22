@@ -1,3 +1,4 @@
+import PostContent from "../models/PostContent";
 import Post from "./Post";
 
 
@@ -11,9 +12,19 @@ function Feed(props: any) {
 
         for (let i = 0; i < cardData.length; ++i) {
             var unique_key = "uniqueId" + i.toString();
+            // var post = new PostContent(cardData[i].postId);
+            var post = new PostContent(cardData[i].postId, 
+                                        cardData[i].content,
+                                        cardData[i].imgUrl,
+                                        cardData[i].likes,
+                                        cardData[i].posted,
+                                        cardData[i].replies,
+                                        cardData[i].displayName,
+                                        cardData[i].username);
+
             cards.push(
                 <div className={ "mt-6 ml-10 mr-6 mb-6 "} key={unique_key}>
-                    <Post { ...cardData[i] } />
+                    <Post { ...post } />
                 </div>)
         }
         
