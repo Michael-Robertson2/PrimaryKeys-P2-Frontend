@@ -12,19 +12,20 @@ function ProfilePage(){
     const principal = useContext(PrincipalContext);
     const setPrincipal = useContext(SetPrincipalContext);
     
+    async function fetchData() {
+        await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
+            .then((response) => {
+                setError("");
+                let resdata = response.data;
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
+                setProfile!(temp);
+                console.log(temp);
+            }).catch( (error) => {
+                setError(error.response.data.message);
+            }) 
+    }
+    
     useEffect( ()=> {
-        const fetchData = async () => {
-            await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
-                .then((response) => {
-                    setError("");
-                    let resdata = response.data;
-                    let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
-                    setProfile!(temp);
-                    console.log(temp);
-                }).catch( (error) => {
-                    setError(error.response.data.message);
-                }) 
-        }
         fetchData();
     },[]);
     
