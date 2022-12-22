@@ -1,5 +1,5 @@
 import RepliesContent from "../models/RepliesContent";
-import SylvesterAPI from "../pages/ApiConfig";
+import SylvesterAPI from '../utils/ApiConfig';
 
 
 function RepliesSection(property: RepliesContent){

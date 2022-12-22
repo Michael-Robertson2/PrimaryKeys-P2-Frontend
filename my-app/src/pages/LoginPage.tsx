@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent, useContext, useState } from 'react';
-import SylvesterAPI from './ApiConfig';
+import SylvesterAPI from '../utils/ApiConfig';
 import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
 import Principal from '../models/Principal';
 
