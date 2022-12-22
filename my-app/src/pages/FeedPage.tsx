@@ -1,9 +1,7 @@
-
 import { useContext, useEffect, useState } from "react";
-import Post from "../components/Post";
 import MakePost from "../components/MakePost";
 import SylvesterAPI from "../utils/ApiConfig";
-import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
+import { PrincipalContext } from "../context/PrincipalProvider";
 import PostResponse from "../models/PostResponse";
 import Feed from "../components/Feed";
 
@@ -12,14 +10,16 @@ function FeedPage() {
     const [error, setError] = useState<string>("");
     const principal = useContext(PrincipalContext);
 
+    console.log(error);
+
     useEffect(() => {
         getPosts();
-    }, []);
+    });
 
     useEffect(() => {
         let intervalId = setInterval(getPosts , 5000);
         return () => { clearInterval(intervalId) }
-    }, []);
+    });
 
 
     async function getPosts() {
@@ -27,7 +27,7 @@ function FeedPage() {
         .then((response) => {
             setError("");
             let resdata = response.data;
-            let newPosts: PostResponse[] = new Array();
+            let newPosts: PostResponse[] = [];
             for (let i = 0; i < resdata.length; i++) {
                 let post = resdata[resdata.length - 1 - i];
                 let newPost: PostResponse = new PostResponse(post.content, post.imgUrl, post.postId, post.posted);
