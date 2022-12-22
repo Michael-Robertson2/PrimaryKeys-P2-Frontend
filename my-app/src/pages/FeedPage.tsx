@@ -15,7 +15,8 @@ function FeedPage() {
                             likes = {[]}
                             replies = {[]}
                             imgUrl = ""
-                            displayName="Elias Gonzalez" 
+                            displayName="Elias Gonzalez"
+                            username = "slurpy"
                             posted="04 / 02 / 2022" 
                             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula."/>
                 </div>

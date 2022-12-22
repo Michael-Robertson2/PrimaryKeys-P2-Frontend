@@ -11,12 +11,11 @@ function Navbar() {
     setPrincipal!(null);
   }
 
-
-
   return (
     <nav className="sticky top-0 flex flex-wrap items-center justify-between px-2 py-4 bg-gradient-to-r from-slate-800 to-slate-700 ">
       <div className="container mx-auto flex flex-wrap items-center justify-between pt-1">
-        <div className="font-serif w-full  flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+        <div className="w-1/5"></div>
+        <div className="font-serif w-full flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           {/* Title */}
           <p className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white hover:opacity-80">
             <Link to={"/"}>
@@ -84,6 +83,7 @@ function Navbar() {
 
           </ul>
         </div>
+        <div className="w-1/5"></div>
       </div>
     </nav>
   )
