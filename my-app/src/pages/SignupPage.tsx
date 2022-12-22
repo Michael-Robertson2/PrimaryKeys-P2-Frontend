@@ -2,7 +2,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
 import Principal from '../models/Principal';
-import SylvesterAPI from './ApiConfig';
+import SylvesterAPI from '../utils/ApiConfig';
 
 function SignupPage(){
     const [username, setUsername] = useState<string>("");

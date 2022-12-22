@@ -2,7 +2,7 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
 import Profile from "../models/Profile";
-import SylvesterAPI from "./ApiConfig";
+import SylvesterAPI from '../utils/ApiConfig';
 
 
 function ProfilePage(){

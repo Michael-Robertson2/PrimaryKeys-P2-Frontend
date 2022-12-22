@@ -3,7 +3,7 @@ import { PencilSquareIcon } from '@heroicons/react/24/solid'
 
 import { useState, useContext } from "react";
 import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
-import SylvesterAPI from '../pages/ApiConfig';
+import SylvesterAPI from '../utils/ApiConfig';
 
 import TenorSearch from "./TenorSearch";
 
