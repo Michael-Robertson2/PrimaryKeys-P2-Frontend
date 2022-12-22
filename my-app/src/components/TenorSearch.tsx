@@ -7,9 +7,10 @@ function TenorSearch (props: any) {
     const [searchResults, setSearchResults] = useState<[]>([]);
     const [imgUrl, setImgUrl] = useState<string>("");
 
+    var passData = props.passData;
     useEffect(() => {
-        props.passData(imgUrl);
-    }, [imgUrl]);
+        passData(imgUrl);
+    }, [passData, imgUrl]);
 
     async function executingSearch(term: string) {
         const apikey = "AIzaSyDWFvFcdJM08ooKmAx6d2s_Lkem53DNyJA";
@@ -25,7 +26,7 @@ function TenorSearch (props: any) {
     }
 
     function searchTenor(s: string) {
-        if (s.length == 0) {
+        if (s.length === 0) {
             setSearchResults([]);
             setImgUrl("");
         } else {
@@ -40,14 +41,14 @@ function TenorSearch (props: any) {
                 setImgUsingUrl(url);
                 return (
                     <div>
-                        <img id="unique_id_12o3987" src={ url } />
+                        <img id="unique_id_12o3987" alt = "" src={ url } />
                     </div>
                 )
             }
-        } else if (myUrl != "") {
+        } else if (myUrl !== "") {
             return (
                 <div>
-                    <img id="unique_id_12o3987" src={ myUrl } />
+                    <img id="unique_id_12o3987" alt = "" src={ myUrl } />
                 </div>
             )
         }
@@ -56,7 +57,7 @@ function TenorSearch (props: any) {
     }
 
     function setImgUsingUrl(s: string) {
-        if (s != imgUrl) {
+        if (s !== imgUrl) {
             setImgUrl(s);
         }
     }
