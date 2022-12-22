@@ -10,8 +10,11 @@ function LoginPage(){
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
-    const setPrincipal = useContext(SetPrincipalContext);
+
     const principal = useContext(PrincipalContext); 
+    const setPrincipal = useContext(SetPrincipalContext);
+
+    console.log(principal);
 
     async function submit(e: FormEvent){
         e.preventDefault();

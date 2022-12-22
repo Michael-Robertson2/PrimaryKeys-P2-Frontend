@@ -16,6 +16,8 @@ function SignupPage(){
     const setPrincipal = useContext(SetPrincipalContext);
     const navigate = useNavigate();
 
+    console.log(principal);
+
     async function submit(e: FormEvent){
         e.preventDefault();
         await SylvesterAPI.post("/users",{

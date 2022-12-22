@@ -1,8 +1,8 @@
 import { GifIcon } from '@heroicons/react/24/outline'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 
-import { useState, useContext } from "react";
-import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
+import { useState } from "react";
+// import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
 import SylvesterAPI from '../utils/ApiConfig';
 
 import TenorSearch from "./TenorSearch";

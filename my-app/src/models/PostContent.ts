@@ -1,15 +1,19 @@
 export default class PostContent {
-    id: string;
-    name: string;
-    icon: string; // link to icon image
-    date: string;
-    message: string;
+    postId: string;
+    content: string;
+    imgUrl: string;
+    likes: [];
+    posted: string;
+    replies: [];
+    displayName: string;
 
-    constructor(id: string, name: string, icon: string, date: string, message: string) {
-        this.id = id;
-        this.name = name;
-        this.icon = icon;
-        this.date = date;
-        this.message = message;
+    constructor(postId: string, content: string, imgUrl: string, likes: [], posted: string, replies: [], displayName: string) {
+        this.postId = postId;
+        this.content = content;
+        this.imgUrl = imgUrl;
+        this.likes = likes;
+        this.posted = posted;
+        this.replies = replies;
+        this.displayName = displayName;
     }
 }

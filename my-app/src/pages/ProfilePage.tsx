@@ -11,6 +11,9 @@ function ProfilePage(){
     const [error, setError] = useState<string>("");
     const principal = useContext(PrincipalContext);
     const setPrincipal = useContext(SetPrincipalContext);
+
+    console.log(error);
+    console.log(setPrincipal);
     
     async function fetchData() {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
@@ -27,7 +30,7 @@ function ProfilePage(){
     
     useEffect( ()=> {
         fetchData();
-    },[]);
+    });
     
 
     return (

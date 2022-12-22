@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import Principal from "../models/Principal";
 
 export const PrincipalContext = createContext<Principal | null>(null);
@@ -9,13 +9,11 @@ export default function PrincipalProvider({children}: any){
     
     /*TODO
     finish principalProvider
-
-    see what getItem (auth) actually retrieves
     */ 
 
-    useEffect(()=> {
-        const data = window.sessionStorage.getItem("auth");
-    }, [window.sessionStorage.getItem("auth")]);
+    // useEffect(()=> {
+    //     const data = window.sessionStorage.getItem("auth");
+    // }, [window.sessionStorage.getItem("auth")]);
 
     return(
     <PrincipalContext.Provider value={principal}>
