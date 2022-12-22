@@ -33,7 +33,9 @@ function ProfilePage(){
     return (
         <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
             <div className="flex flex-col w-1/5 items-center border-solid border-4 border-cyan-300 ">
-                {profile === null ? <UserIcon className="" /> : <img src="" alt="something" />}
+                {profile === null ? <UserIcon className="" /> : (
+                    profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
+                )}
                 <ul>
                         <li >{principal?.username}</li>
                         <li >{profile?.displayName}</li>
