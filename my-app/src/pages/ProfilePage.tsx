@@ -40,11 +40,17 @@ function ProfilePage(){
                         <li >{principal?.username}</li>
                         <li >{profile?.displayName}</li>
                         <li>{profile?.birthDate}</li>
+                        <li>{profile?.occupation}</li>
+                        <li>{profile?.location}</li>
                 </ul>
             </div>
 
 
             <div className="border-solid border-4 w-full">
+                <h1>Bio</h1>
+                <div className="border-solid border-4">
+                    {profile?.bio}
+                </div>
                 
                 <h1>My Post</h1>
                 { /*The bottom dive is the get request for our post and then mapped out */ }
