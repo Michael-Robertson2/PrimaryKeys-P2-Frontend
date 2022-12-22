@@ -7,7 +7,7 @@ import SylvesterAPI from '../utils/ApiConfig';
 
 import TenorSearch from "./TenorSearch";
 
-function MakePost() {
+function MakePost(props: any) {
     const [post, setPost] = useState<string>("");
     const [tenorState, setTenorState] = useState<boolean>(false);
     const [tenorUrl, setTenorUrl] = useState<string>("");
@@ -35,6 +35,7 @@ function MakePost() {
         })
         .then((response) => {
             console.log(response);
+            props.functionOnSubmit();
         })
         .catch((error) => {
             console.log(error);

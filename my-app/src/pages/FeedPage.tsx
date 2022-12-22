@@ -1,26 +1,52 @@
 
+import { useContext, useEffect, useState } from "react";
 import Post from "../components/Post";
 import MakePost from "../components/MakePost";
+import SylvesterAPI from "../utils/ApiConfig";
+import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
+import PostResponse from "../models/PostResponse";
+import Feed from "../components/Feed";
 
 function FeedPage() {
+    const [posts, setPosts] = useState<PostResponse[] | null>([]);
+    const [error, setError] = useState<string>("");
+    const principal = useContext(PrincipalContext);
+
+    useEffect(() => {
+        getPosts();
+    }, []);
+
+    useEffect(() => {
+        let intervalId = setInterval(getPosts , 5000);
+        return () => { clearInterval(intervalId) }
+    }, []);
+
+
+    async function getPosts() {
+        await SylvesterAPI.get(`/posts/user?id=${principal?.id}`)
+        .then((response) => {
+            setError("");
+            let resdata = response.data;
+            let newPosts: PostResponse[] = new Array();
+            for (let i = 0; i < resdata.length; i++) {
+                let post = resdata[resdata.length - 1 - i];
+                let newPost: PostResponse = new PostResponse(post.content, post.imgUrl, post.postId, post.posted);
+                newPosts.push(newPost);
+            }
+            setPosts(newPosts);
+            console.log(posts);
+        }).catch( (error) => {
+            setError(error.response.data.message);
+        }) 
+    }
+
     return (
         <div>
             {/* Creating Post */}
-            <MakePost />
+            <MakePost functionOnSubmit={getPosts}/>
 
             { /* Feed */ }
-            <div className="flex flex-col items-center border-double border-4 border-red-500 ">
-                <div className="mt-6 ml-6 mr-6 mb-6">
-                    <Post postId="ANYTHING GOES"
-                            likes = {[]}
-                            replies = {[]}
-                            imgUrl = ""
-                            displayName="Elias Gonzalez"
-                            username = "slurpy"
-                            posted="04 / 02 / 2022" 
-                            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula."/>
-                </div>
-            </div>
+            <Feed posts={posts} />
         </div>
     );
 }
