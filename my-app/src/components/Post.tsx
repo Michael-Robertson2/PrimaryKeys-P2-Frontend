@@ -1,16 +1,52 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
 import { UserIcon } from '@heroicons/react/24/solid'
 
 import PostContent from "../models/PostContent";
 import RepliesSection from "./RepliesSection";
+import { PrincipalContext } from "../context/PrincipalProvider";
+import SylvesterAPI from "../utils/ApiConfig";
 
 function Post(post: PostContent) {
+    const [liked, setLiked] = useState<boolean>(false);
     const [showReplies, setShowReplies] = useState<boolean>(false);
+
+    const principal = useContext(PrincipalContext);
 
     function handleShowReplyToggle(){
         setShowReplies(!showReplies);
+    }
+
+    for (var like of post.likes) {
+        console.log(like);
+    }
+
+    async function toggleLike() {
+        console.log(principal?.token);
+        console.log(post.postId);
+        console.log(principal?.id);
+        if (liked) {
+            await SylvesterAPI.delete("/likes?id=" + post.postId, {
+                headers: {
+                    authorization: principal?.token
+                }
+            })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+            setLiked(false);
+            console.log("I unlike");
+        } else {
+            await SylvesterAPI.post("/likes?id=" + post.postId, {}, {
+                headers: {
+                    authorization: principal?.token
+                }
+            })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+            setLiked(true);
+            console.log("I like");
+        }
     }
 
     return (
@@ -34,9 +70,11 @@ function Post(post: PostContent) {
                     <img src = { post.imgUrl } alt = ""/>
             </div>
 
-            {/* Interaction */}
-            <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
-            <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>            
+            <div>
+                {/* Interaction */}
+                <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
+                <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/>            
+            </div>
 
             {/* Parent ID in RepliesSection below requires the postID from current post. */}
             {showReplies ? <RepliesSection parentId= { post.postId } /> : <></> }

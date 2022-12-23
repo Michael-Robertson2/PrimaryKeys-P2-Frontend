@@ -25,7 +25,8 @@ function Feed(props: any) {
             cards.push(
                 <div className={ "mt-6 ml-10 mr-6 mb-6 "} key={unique_key}>
                     <Post { ...post } />
-                </div>)
+                </div>
+            )
         }
         
         return cards;
