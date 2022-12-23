@@ -1,4 +1,3 @@
-import { UserIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
@@ -62,6 +61,7 @@ function UpdateProfilePage() {
         <form onSubmit={(e)=>submit(e)} className="flex justify-center items-center" >
             <div className="flex flex-col items-center gap-7 shadow-xl rounded-xl mt-20 px-10 py-10 border-solid border-2">
                 <h1 className="font-serif font-bold text-5xl">Update Profile</h1>
+                <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" placeholder={profile?.profilePicUrl} value={profilePicUrl} onChange={(e)=>setProfilePicUrl(e.target.value)} />
                 <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" placeholder={profile?.displayName} value={displayName} onChange={(e)=>setDisplayName(e.target.value)} />
                 <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>setOccupation(e.target.value)} />
                 <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder={profile?.location} value={location} onChange={(e)=>setLocation(e.target.value)}/>
