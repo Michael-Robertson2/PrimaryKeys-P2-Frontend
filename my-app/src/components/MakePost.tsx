@@ -13,12 +13,12 @@ function MakePost(props: any) {
     const [tenorUrl, setTenorUrl] = useState<string>("");
 
     async function submit() {
-        setMyTenorUrl();
+        // setMyTenorUrl();
         console.log("Attempting to submit...");
         console.log(post);
         console.log(tenorUrl);
-        console.log(window.sessionStorage.getItem("auth"));
-        var auth = window.sessionStorage.getItem("auth");
+        console.log(window.sessionStorage.getItem("auth")); 
+        var auth = window.sessionStorage.getItem("auth"); //TODO: Remove sessionStorage reliance and use PrincipalContext
         if (auth) {
             var json = JSON.parse(auth);
         } else {

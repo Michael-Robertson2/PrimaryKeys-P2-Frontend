@@ -34,14 +34,12 @@ function Post(post: PostContent) {
                     <img src = { post.imgUrl } alt = ""/>
             </div>
 
-
             {/* Interaction */}
             <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
-            <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
+            <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>            
 
             {/* Parent ID in RepliesSection below requires the postID from current post. */}
             {showReplies ? <RepliesSection parentId= { post.postId } /> : <></> }
-            
         </div>
 
     )
