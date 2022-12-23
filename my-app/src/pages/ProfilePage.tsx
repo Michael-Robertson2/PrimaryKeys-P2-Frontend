@@ -1,6 +1,6 @@
 import { UserIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
-import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
+import { PrincipalContext } from "../context/PrincipalProvider";
 import Profile from "../models/Profile";
 import SylvesterAPI from '../utils/ApiConfig';
 
@@ -10,10 +10,10 @@ function ProfilePage(){
     const [profile, setProfile] = useState<Profile | null>(null);
     const [error, setError] = useState<string>("");
     const principal = useContext(PrincipalContext);
-    const setPrincipal = useContext(SetPrincipalContext);
+
+    const [hasUpdates, setHasUpdates] = useState<boolean>(false);
 
     console.log(error);
-    console.log(setPrincipal);
     
     async function fetchData() {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
@@ -32,6 +32,9 @@ function ProfilePage(){
         fetchData();
     });
     
+    function toggleOff() {
+        setHasUpdates(false);
+    }
 
     return (
         <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
@@ -68,7 +71,7 @@ function ProfilePage(){
                 </div>
             </div>
 
-
+            { hasUpdates ? <button onClick={ toggleOff }>Update</button> : <></> }
         </div>
     );
 }
