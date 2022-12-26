@@ -35,7 +35,7 @@ function MakePost(props: any) {
         })
         .then((response) => {
             console.log(response);
-            props.functionOnSubmit();
+            // props.functionOnSubmit();
         })
         .catch((error) => {
             console.log(error);
