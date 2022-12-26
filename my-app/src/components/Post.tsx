@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
+import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
 
 import PostContent from "../models/PostContent";
@@ -21,6 +22,10 @@ function Post(post: PostContent) {
     for (var like of post.likes) {
         console.log(like);
     }
+
+    // for (like in post.likes) {
+    //     if (principal?.id === like.)
+    // }
 
     async function toggleLike() {
         console.log(principal?.token);
@@ -72,12 +77,16 @@ function Post(post: PostContent) {
 
             <div>
                 {/* Interaction */}
-                <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
-                <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/>            
+                <div className="flex justify-end">
+                    <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
+                
+                    {post.likes.length + " "}
+                    <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/>            
+                </div>
             </div>
 
             {/* Parent ID in RepliesSection below requires the postID from current post. */}
-            {showReplies ? <RepliesSection parentId= { post.postId } /> : <></> }
+            {showReplies ? <RepliesSection parentId = { post.postId } previousReplies = { post.replies } /> : <></> }
         </div>
 
     )

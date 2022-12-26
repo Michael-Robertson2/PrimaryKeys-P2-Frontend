@@ -19,6 +19,7 @@ function HomePage() {
     async function fetch(setter: any) {
         await SylvesterAPI.get("/posts/posted?limit=4",{})
         .then((response) => {
+            console.log(response.data);
             setter(response.data);
         }).catch((error) => {
             console.log(error);
@@ -33,6 +34,5 @@ function HomePage() {
         </div>
     )
 }
-
 
 export default HomePage;

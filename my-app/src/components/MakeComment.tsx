@@ -9,15 +9,15 @@ function MakeComment(props: any) {
     const principal = useContext(PrincipalContext); 
 
     //request comments from parent post
-    async function buttonClick(){
-        //send request with {property.parentId} to replies endpoint
-        await SylvesterAPI.get("/replies/post?id=f6944fd0-5054-457c-8d58-1602dcadc8c0",{
-        }).then((response)=>{
-            console.log(response);
-        }).catch((error)=>{
-            console.log(error);
-        });
-    }
+    // async function buttonClick(){
+    //     //send request with {property.parentId} to replies endpoint
+    //     await SylvesterAPI.get("/replies/post?id=f6944fd0-5054-457c-8d58-1602dcadc8c0",{
+    //     }).then((response)=>{
+    //         console.log(response);
+    //     }).catch((error)=>{
+    //         console.log(error);
+    //     });
+    // }
 
     async function submit() {
         console.log(reply);
@@ -25,6 +25,7 @@ function MakeComment(props: any) {
 
         await SylvesterAPI.post("/replies", {
             reply: reply,
+            imgUrl: tenorUrl,
             postId: props.parentId
         }, {
             headers: {
@@ -33,10 +34,13 @@ function MakeComment(props: any) {
         })
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
+
+        setReply("");
+        setTenorUrl("");
     }
 
     return (
-        <div>
+        <div className="block p-6 rounded-lg shadow-lg bg-gray-200 w-full">
             <input className="w-full" placeholder="I tawt I taw a puddy tat!" onChange={(e) => setReply(e.target.value)}></input>
             <TenorSearch passData={setTenorUrl}/>
             <button onClick={ submit }>Submit</button>
