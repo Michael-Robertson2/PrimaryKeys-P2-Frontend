@@ -19,7 +19,8 @@ function MakeComment(props: any) {
     //     });
     // }
 
-    async function submit() {
+    async function submit(e: any) {
+        e.preventDefault();
         console.log(reply);
         console.log(props.parentId);
 
@@ -35,16 +36,18 @@ function MakeComment(props: any) {
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
 
+        console.log("GOT HERE");
         setReply("");
         setTenorUrl("");
+        console.log("GOT HERE");
     }
 
     return (
-        <div className="block p-6 rounded-lg shadow-lg bg-gray-200 w-full">
-            <input className="w-full" placeholder="I tawt I taw a puddy tat!" onChange={(e) => setReply(e.target.value)}></input>
+        <form className="block p-6 rounded-lg shadow-lg bg-gray-200 w-full">
+            <input className="w-full" placeholder="I tawt I taw a puddy tat!" value={ reply } onChange={(e) => setReply(e.target.value)}></input>
             <TenorSearch passData={setTenorUrl}/>
-            <button onClick={ submit }>Submit</button>
-        </div>
+            <button onClick={ (e) => submit(e) } type="submit">Submit</button>
+        </form>
     )
 }
 

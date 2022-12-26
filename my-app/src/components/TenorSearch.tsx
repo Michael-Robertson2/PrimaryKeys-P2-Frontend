@@ -66,7 +66,7 @@ function TenorSearch (props: any) {
         <div>
             <div className="flex flex-col rounded bg-gray-100 shadow-md w-full" >
                 <input className="bg-gray-100 rounded-md border-2 w-full" 
-                    placeholder="Enter Search Terms..." 
+                    placeholder="Enter Search Terms..."
                     onChange = {(e) => searchTenor(e.target.value)}/>
                 
                 <input className="bg-gray-100 rounded-md border-2 w-full"
