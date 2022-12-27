@@ -1,6 +1,7 @@
 import { UserIcon } from "@heroicons/react/24/solid";
-import { useContext, useEffect, useState } from "react";
-import { PrincipalContext } from "../context/PrincipalProvider";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
 import Profile from "../models/Profile";
 import SylvesterAPI from '../utils/ApiConfig';
 
@@ -8,9 +9,15 @@ import SylvesterAPI from '../utils/ApiConfig';
 function ProfilePage(){
     
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [displayName, setDisplayName] = useState<string>("");
+    const [birthDate, setBirthDate] = useState<string>("");
+    const [occupation, setOccupation] = useState<string>("");
+    const [location, setLocation] = useState<string>("");
+    const [bio, setBio] = useState<string>("");
+    const [profilePicUrl, setProfilePicUrl] = useState<string>("");
     const [error, setError] = useState<string>("");
     const principal = useContext(PrincipalContext);
-
+    const navigate = useNavigate();
     const [hasUpdates, setHasUpdates] = useState<boolean>(false);
 
     console.log(error);
@@ -27,6 +34,26 @@ function ProfilePage(){
                 setError(error.response.data.message);
             }) 
     }
+
+    async function submit(e: FormEvent) {
+        e.preventDefault();
+        await SylvesterAPI.put(`/profiles`, {
+            displayName: displayName,
+            location: location,
+            birthDate: birthDate,
+            occupation: occupation,
+            bio: bio,
+            profilePicUrl: profilePicUrl
+        }).then((response) => {
+            setError("")
+            console.log(response.data);
+            navigate("/");
+        }).catch((error)=>{
+            setError(error.response.data.message)
+            setTimeout(() =>setError(""),5000);
+            console.log(error.response.data.message);
+        });
+    }
     
     useEffect( ()=> {
         fetchData();
@@ -37,42 +64,43 @@ function ProfilePage(){
     }
 
     return (
-        <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
-            <div className="flex flex-col w-1/5 items-center border-solid border-4 border-cyan-300 ">
+        <form onSubmit={(e)=>submit(e)} className="flex justify-center items-center" >
+            <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
+                <div className="flex flex-col w-1/5 items-center border-solid border-4 border-cyan-300 ">
 
-                { /*Implement conditional rendering so this button only appears if user is looking at their own profile page
-                <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">Edit</button>*/ }
-
-                {profile === null ? <UserIcon className="" /> : (
-                    profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
-                )}
-                <ul>
-                        <li >{principal?.username}</li>
-                        <li >{profile?.displayName}</li>
-                        <li>{profile?.birthDate}</li>
-                        <li>{profile?.occupation}</li>
-                        <li>{profile?.location}</li>
-                </ul>
-            </div>
-
-
-            <div className="border-solid border-4 w-full">
-                <h1>Bio</h1>
-                <div className="border-solid border-4">
-                    {profile === null ? <br/> : (
-                        profile.bio === null ? <br/> : profile.bio
+                    <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" placeholder={profile?.profilePicUrl} value={profilePicUrl} onChange={(e)=>setProfilePicUrl(e.target.value)} />
+                    {profile === null ? <UserIcon className="" /> : (
+                        profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
                     )}
+                    <ul>
+                            <li>{principal?.username}</li>
+                            <li><input className="bg-gray-100 shadow-xl rounded-md px-5 py-2" placeholder={profile?.displayName} value={displayName} onChange={(e)=>setDisplayName(e.target.value)} /></li>
+                            <li><div>
+                                <p className='inline-block pr-5'>Birth Date</p>
+                                <input type="date" className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder="Date of Birth" value={birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
+                            </div></li>
+                            <li><input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>setOccupation(e.target.value)} /></li>
+                            <li><input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder={profile?.location} value={location} onChange={(e)=>setLocation(e.target.value)}/></li>
+                    </ul>
                 </div>
-                
-                <h1>My Post</h1>
-                { /*The bottom dive is the get request for our post and then mapped out */ }
-                <div className="border-solid border-4">
-                    Container2.1 PostHere
-                </div>
-            </div>
 
-            { hasUpdates ? <button onClick={ toggleOff }>Update</button> : <></> }
-        </div>
+
+                <div className="border-solid border-4 w-full">
+                    <h1>Bio</h1>
+                    <div className="border-solid border-4">
+                        <input className="bg-gray-100 shadow-xl rounded-md px-5 py-2"  placeholder={profile?.bio} value={bio} onChange={(e)=>setBio(e.target.value)}/>
+                    </div>
+                    
+                    <h1>My Post</h1>
+                    { /*The bottom dive is the get request for our post and then mapped out */ }
+                    <div className="border-solid border-4">
+                        Container2.1 PostHere
+                    </div>
+                </div>
+
+                { hasUpdates ? <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110" onClick={ toggleOff }>Update</button> : <></> }
+            </div>
+        </form>
     );
 }
 
