@@ -1,24 +1,24 @@
 import { UserIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { PrincipalContext, SetPrincipalContext } from "../context/PrincipalProvider";
+import { PrincipalContext } from "../context/PrincipalProvider";
 import Profile from "../models/Profile";
+import Feed from "../components/Feed";
 import SylvesterAPI from '../utils/ApiConfig';
 
 
 function ProfilePage(){
     
     const [profile, setProfile] = useState<Profile | null>(null);
-    const [displayName, setDisplayName] = useState<string>("");
-    const [birthDate, setBirthDate] = useState<string>("");
-    const [occupation, setOccupation] = useState<string>("");
-    const [location, setLocation] = useState<string>("");
-    const [bio, setBio] = useState<string>("");
-    const [profilePicUrl, setProfilePicUrl] = useState<string>("");
-    const [error, setError] = useState<string>("");
+    const [displayName, setDisplayName] = useState<string | undefined>("");
+    const [birthDate, setBirthDate] = useState<string | undefined>("");
+    const [occupation, setOccupation] = useState<string | undefined>("");
+    const [location, setLocation] = useState<string | undefined>("");
+    const [bio, setBio] = useState<string | undefined>("");
+    const [profilePicUrl, setProfilePicUrl] = useState<string | undefined>("");
+    const [error, setError] = useState<string | undefined>("");
     const principal = useContext(PrincipalContext);
-    const navigate = useNavigate();
     const [hasUpdates, setHasUpdates] = useState<boolean>(false);
+    const [posts, setPosts] = useState([]);
 
     console.log(error);
     
@@ -29,13 +29,24 @@ function ProfilePage(){
                 let resdata = response.data;
                 let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
                 setProfile!(temp);
-                console.log(temp);
+                changeOnStates(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
             }) 
     }
 
+    async function fetchPosts(setter: any) {
+        await SylvesterAPI.get(`/posts/user?id=${principal?.id}`)
+        .then((response) => {
+            console.log(response.data);
+            setter(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     async function submit(e: FormEvent) {
+        setHasUpdates(false);
         e.preventDefault();
         await SylvesterAPI.put(`/profiles`, {
             displayName: displayName,
@@ -55,16 +66,22 @@ function ProfilePage(){
     
     useEffect( ()=> {
         fetch();
+        fetchPosts(setPosts);
     }, []);
 
     function registerChange(setter:any, value:any) {
         setter(value);
         setHasUpdates(true);
     }
-    
-    function toggleOff() {
-        setHasUpdates(false);
-    }
+
+    function changeOnStates(profile:any) {
+        setDisplayName(profile.displayName);
+        setBirthDate(profile.birthDate);
+        setOccupation(profile.occupation);
+        setLocation(profile.location);
+        setBio(profile.bio);
+        setProfilePicUrl(profile.profilePicUrl);
+}
 
     return (
         <form onSubmit={(e)=>submit(e)} >
@@ -74,7 +91,7 @@ function ProfilePage(){
                     profile.profilePicUrl === null ? <img src="https://vectorified.com/images/twitter-default-icon-25.jpg" /> : <img src={profile.profilePicUrl} />
                     )}
 
-                    <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
+                    <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl != null ? profile?.profilePicUrl : "Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
                 </div>
                 <div>
                     <h1><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
@@ -82,7 +99,7 @@ function ProfilePage(){
                 </div>
             </div>
             <div className = "border-solid border-4 h-full shadow-md bg-white">
-                <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
+                <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio != null ? profile?.bio : "Bio"} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
             </div>
             <div>
             <ul>
@@ -98,18 +115,16 @@ function ProfilePage(){
                 </li>
             </ul>
             
-            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ toggleOff }>Update</button> : <></> }
+            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ submit }>Update</button> : <></> }
             { error ? <p className='text-red-600'>{error}</p>: null }
-            { hasUpdates ? <Link to={"/profile"} className="text-blue-700 underline">Cancel </Link> : <></> }
+            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ () => changeOnStates(profile) }>Cancel</button> : <></> }
 
             </div>
 
             <div className="border-solid border-4 w-full">
-                <h1>My Post</h1>
-                { /*The bottom dive is the get request for our post and then mapped out */ }
-                <div className="border-solid border-4">
-                    Container2.1 PostHere
-                </div>
+            <ol>
+                <Feed posts={posts} />
+            </ol>
             </div>
         </form>
     );
