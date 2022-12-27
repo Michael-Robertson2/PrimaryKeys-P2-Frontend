@@ -9,6 +9,7 @@ function Navbar() {
 
   function logout() {
     setPrincipal!(null);
+    sessionStorage.clear();
   }
 
   return (

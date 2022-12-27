@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
-import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
+//import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
 
 import PostContent from "../models/PostContent";

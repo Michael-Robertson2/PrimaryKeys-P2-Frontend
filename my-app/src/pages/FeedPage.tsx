@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MakePost from "../components/MakePost";
 import SylvesterAPI from "../utils/ApiConfig";
-import PostResponse from "../models/PostResponse";
+//import PostResponse from "../models/PostResponse";
 import Feed from "../components/Feed";
 
 function FeedPage() {
