@@ -46,6 +46,7 @@ function MakePost(props: any) {
         setTenorState(!tenorState);
     }
 
+    /*
     function setMyTenorUrl() {
         var url = document.getElementById("unique_id_019876091287")?.getAttribute("value");
         console.log("Setter");
@@ -56,6 +57,7 @@ function MakePost(props: any) {
             setTenorUrl("");
         }
     }
+    */
 
     return (
     <div className="flex flex-col items-center border-double border-4 border-red-500">
