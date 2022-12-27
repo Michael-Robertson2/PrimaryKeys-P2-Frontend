@@ -75,7 +75,7 @@ function ProfilePage(){
                         <li><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>setDisplayName(e.target.value)} /></li>
                         <li><div>
                             <p className='inline-block pr-5'>Birth Date</p>
-                            <input type="date" className="bg-gray-100 shadow-xl rounded-md"  placeholder="Date of Birth" value={birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
+                            <input type="date" className="bg-gray-100 shadow-xl rounded-md" value={birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
                         </div></li>
                         <li><input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>setOccupation(e.target.value)} /></li>
                         <li><input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>setLocation(e.target.value)}/></li>
