@@ -22,7 +22,7 @@ function ProfilePage(){
 
     console.log(error);
     
-    async function fetchData() {
+    async function fetch() {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
             .then((response) => {
                 setError("");
@@ -44,20 +44,23 @@ function ProfilePage(){
             occupation: occupation,
             bio: bio,
             profilePicUrl: profilePicUrl
-        }).then((response) => {
-            setError("")
-            console.log(response.data);
-            navigate("/");
-        }).catch((error)=>{
-            setError(error.response.data.message)
-            setTimeout(() =>setError(""),5000);
-            console.log(error.response.data.message);
-        });
+        }, {
+            headers: {
+                authorization: principal?.token
+            }
+        })
+        .then((response) => console.log(response))
+        .catch((error)=>console.log(error));
     }
     
     useEffect( ()=> {
-        fetchData();
-    });
+        fetch();
+    }, []);
+
+    function registerChange(setter:any, value:any) {
+        setter(value);
+        setHasUpdates(true);
+    }
     
     function toggleOff() {
         setHasUpdates(false);
@@ -65,40 +68,49 @@ function ProfilePage(){
 
     return (
         <form onSubmit={(e)=>submit(e)} >
-            <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
-                <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl} value={profilePicUrl} onChange={(e)=>setProfilePicUrl(e.target.value)} />
-                {profile === null ? <UserIcon className="" /> : (
-                    profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
-                )}
-                <ul>
-                        <li>{principal?.username}</li>
-                        <li><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>setDisplayName(e.target.value)} /></li>
-                        <li><div>
-                            <p className='inline-block pr-5'>Birth Date</p>
-                            <input type="date" className="bg-gray-100 shadow-xl rounded-md" value={birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
-                        </div></li>
-                        <li><input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>setOccupation(e.target.value)} /></li>
-                        <li><input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>setLocation(e.target.value)}/></li>
-                </ul>
+            <div className="flex flex-row border-solid border-4 h-full shadow-md bg-white">
+                <div>
+                    {profile === null ? <UserIcon /> : (
+                    profile.profilePicUrl === null ? <img src="https://vectorified.com/images/twitter-default-icon-25.jpg" /> : <img src={profile.profilePicUrl} />
+                    )}
+
+                    <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
+                </div>
+                <div>
+                    <h1><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
+                    <h2>{principal?.username}</h2>
+                </div>
+            </div>
+            <div className = "border-solid border-4 h-full shadow-md bg-white">
+                <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
+            </div>
+            <div>
+            <ul>
+                <li>
+                    <p className='inline-block pr-5'>Location</p>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
+                <li>
+                    <p className='inline-block pr-5'>Occupation</p>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
+                <li>
+                    <p className='inline-block pr-5'>Birth Date</p>
+                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.birthDate} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
+                </li>
+            </ul>
+            
+            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ toggleOff }>Update</button> : <></> }
+            { error ? <p className='text-red-600'>{error}</p>: null }
+            { hasUpdates ? <Link to={"/profile"} className="text-blue-700 underline">Cancel </Link> : <></> }
+
             </div>
 
-
             <div className="border-solid border-4 w-full">
-                <h1>Bio</h1>
-                <div className="border-solid border-4">
-                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio} value={bio} onChange={(e)=>setBio(e.target.value)}/>
-                </div>
-                
                 <h1>My Post</h1>
                 { /*The bottom dive is the get request for our post and then mapped out */ }
                 <div className="border-solid border-4">
                     Container2.1 PostHere
                 </div>
             </div>
-
-            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ toggleOff }>Update</button> : <></> }
-            { error ? <p className='text-red-600'>{error}</p>: null }
-            <Link to={"/"} className="text-blue-700 underline">Cancel </Link>
         </form>
     );
 }
