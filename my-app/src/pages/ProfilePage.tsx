@@ -1,78 +1,133 @@
 import { UserIcon } from "@heroicons/react/24/solid";
-import { useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { PrincipalContext } from "../context/PrincipalProvider";
 import Profile from "../models/Profile";
+import Feed from "../components/Feed";
 import SylvesterAPI from '../utils/ApiConfig';
 
 
 function ProfilePage(){
     
     const [profile, setProfile] = useState<Profile | null>(null);
-    const [error, setError] = useState<string>("");
+    const [displayName, setDisplayName] = useState<string | undefined>("");
+    const [birthDate, setBirthDate] = useState<string | undefined>("");
+    const [occupation, setOccupation] = useState<string | undefined>("");
+    const [location, setLocation] = useState<string | undefined>("");
+    const [bio, setBio] = useState<string | undefined>("");
+    const [profilePicUrl, setProfilePicUrl] = useState<string | undefined>("");
+    const [error, setError] = useState<string | undefined>("");
     const principal = useContext(PrincipalContext);
-
     const [hasUpdates, setHasUpdates] = useState<boolean>(false);
+    const [posts, setPosts] = useState([]);
 
     console.log(error);
     
-    async function fetchData() {
+    async function fetch() {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
             .then((response) => {
                 setError("");
                 let resdata = response.data;
                 let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
                 setProfile!(temp);
-                console.log(temp);
+                changeOnStates(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
             }) 
     }
-    
-    useEffect( ()=> {
-        fetchData();
-    },[]);// eslint-disable-line react-hooks/exhaustive-deps
-    
-    function toggleOff() {
-        setHasUpdates(false);
+
+    async function fetchPosts(setter: any) {
+        await SylvesterAPI.get(`/posts/user?id=${principal?.id}`)
+        .then((response) => {
+            console.log(response.data);
+            setter(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
+    async function submit(e: FormEvent) {
+        setHasUpdates(false);
+        e.preventDefault();
+        await SylvesterAPI.put(`/profiles`, {
+            displayName: displayName,
+            location: location,
+            birthDate: birthDate,
+            occupation: occupation,
+            bio: bio,
+            profilePicUrl: profilePicUrl
+        }, {
+            headers: {
+                authorization: principal?.token
+            }
+        })
+        .then((response) => console.log(response))
+        .catch((error)=>console.log(error));
+    }
+    
+    useEffect( ()=> {
+        update-profile
+        fetch();
+        fetchPosts(setPosts);
+    }, []);
+
+    function registerChange(setter:any, value:any) {
+        setter(value);
+        setHasUpdates(true);
+    }
+
+    function changeOnStates(profile:any) {
+        setDisplayName(profile.displayName);
+        setBirthDate(profile.birthDate);
+        setOccupation(profile.occupation);
+        setLocation(profile.location);
+        setBio(profile.bio);
+        setProfilePicUrl(profile.profilePicUrl);
+}
+
     return (
-        <div className=" flex flex-row border-solid border-4 h-full shadow-md bg-white px-1">
-            <div className="flex flex-col w-1/5 items-center border-solid border-4 border-cyan-300 ">
+        <form onSubmit={(e)=>submit(e)} >
+            <div className="flex flex-row border-solid border-4 h-full shadow-md bg-white">
+                <div>
+                    {profile === null ? <UserIcon /> : (
+                    profile.profilePicUrl === null ? <img src="https://vectorified.com/images/twitter-default-icon-25.jpg" /> : <img src={profile.profilePicUrl} />
+                    )}
 
-                { /*Implement conditional rendering so this button only appears if user is looking at their own profile page
-                <button className="bg-slate-800 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110">Edit</button>*/ }
-
-                {profile === null ? <UserIcon className="" /> : (
-                    profile.profilePicUrl === null ? "" : <img src={profile.profilePicUrl} alt="something" />
-                )}
-                <ul>
-                        <li >{principal?.username}</li>
-                        <li >{profile?.displayName}</li>
-                        <li>{profile?.birthDate}</li>
-                        <li>{profile?.occupation}</li>
-                        <li>{profile?.location}</li>
-                </ul>
+                    <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl != null ? profile?.profilePicUrl : "Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
+                </div>
+                <div>
+                    <h1><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
+                    <h2>{principal?.username}</h2>
+                </div>
             </div>
+            <div className = "border-solid border-4 h-full shadow-md bg-white">
+                <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio != null ? profile?.bio : "Bio"} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
+            </div>
+            <div>
+            <ul>
+                <li>
+                    <p className='inline-block pr-5'>Location</p>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
+                <li>
+                    <p className='inline-block pr-5'>Occupation</p>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
+                <li>
+                    <p className='inline-block pr-5'>Birth Date</p>
+                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.birthDate} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
+                </li>
+            </ul>
+            
+            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ submit }>Update</button> : <></> }
+            { error ? <p className='text-red-600'>{error}</p>: null }
+            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ () => changeOnStates(profile) }>Cancel</button> : <></> }
 
+            </div>
 
             <div className="border-solid border-4 w-full">
-                <h1>Bio</h1>
-                <div className="border-solid border-4">
-                    {profile === null ? <br/> : (
-                        profile.bio === null ? <br/> : profile.bio
-                    )}
-                </div>
-                
-                <h1>My Post</h1>
-                { /*The bottom dive is the get request for our post and then mapped out */ }
-                <div className="border-solid border-4">
-                    Container2.1 PostHere
-                </div>
+            <ol>
+                <Feed posts={posts} />
+            </ol>
             </div>
-
-            { hasUpdates ? <button onClick={ toggleOff }>Update</button> : <></> }
-        </div>
+        </form>
     );
 }
 
