@@ -65,6 +65,7 @@ function ProfilePage(){
     }
     
     useEffect( ()=> {
+        update-profile
         fetch();
         fetchPosts(setPosts);
     }, []);

@@ -46,6 +46,7 @@ function MakePost(props: any) {
         setTenorState(!tenorState);
     }
 
+    /*
     function setMyTenorUrl() {
         var url = document.getElementById("unique_id_019876091287")?.getAttribute("value");
         console.log("Setter");
@@ -56,16 +57,17 @@ function MakePost(props: any) {
             setTenorUrl("");
         }
     }
+    */
 
     return (
-    <div className="flex flex-col items-center border-double border-4 border-red-500">
+    <div className="flex flex-col items-center  ">
         <div className="md:flex flex-start pt-8 w-full">
             <div className="block p-6 rounded-lg shadow-lg bg-gray-200  ml-6 mr-6 w-full">
-                <input className="text-gray-700 mb-6 h-100 w-full" placeholder="Sufferin' succotash, spit it out!" onChange={(e) => setPost(e.target.value)}></input>
+                <input className="rounded p-1 text-gray-700 mb-6 h-100 w-full" placeholder="Sufferin' succotash, spit it out!" onChange={(e) => setPost(e.target.value)}></input>
                 
                 {tenorState ? <TenorSearch passData={setTenorUrl}/> : <div></div>}
                 
-                <div className="border-double border-4 border-red-500 flex justify-end">
+                <div className="border-double border-4  flex justify-end">
                     <GifIcon className="h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick={toggleTenor}/>
                     <PencilSquareIcon className="h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick={submit}/>
                 </div>
