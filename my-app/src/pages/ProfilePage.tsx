@@ -30,7 +30,7 @@ function ProfilePage(){
     
     useEffect( ()=> {
         fetchData();
-    });
+    },[]);// eslint-disable-line react-hooks/exhaustive-deps
     
     function toggleOff() {
         setHasUpdates(false);
