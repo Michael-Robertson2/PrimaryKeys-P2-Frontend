@@ -114,11 +114,12 @@ function ProfilePage(){
                     <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={"Birth Date"} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
                 </li>
             </ul>
+            </div>
             
-            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ submit }>Update</button> : <></> }
-            { error ? <p className='text-red-600'>{error}</p>: null }
-            { hasUpdates ? <button className="bg-slate-800 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ () => changeOnStates(profile) }>Cancel</button> : <></> }
-
+            <div className="grid gap-px">
+                { hasUpdates ? <button className="bg-green-500 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ submit }>Update</button> : <></> }
+                { hasUpdates ? <button className="bg-red-500 rounded-md text-white ease-out duration-300 hover:scale-110" onClick={ () => changeOnStates(profile) }>Cancel</button> : <></> }
+                { error ? <p className='text-red-600'>{error}</p>: null }
             </div>
 
             <div className="border-solid border-4 w-full">
