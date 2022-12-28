@@ -9,46 +9,48 @@ import { useParams } from "react-router-dom";
 function PublicProfilePage(){
     
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [userId, setUserId] = useState<string>("");
     const [error, setError] = useState<string>("");
     const [posts, setPosts] = useState([]);
     const params = useParams();
-    const userId = params.userId;
+    const username = params.username;
 
     console.log(error);
+
+    async function fetchUser() {
+        await SylvesterAPI.get(`/users/username?username=${username}`)
+            .then((response) => {
+                console.log(response.data);
+                setUserId(response.data.userId);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
     
     async function fetch() {
         await SylvesterAPI.get(`/profiles/user?id=${userId}`)
             .then((response) => {
                 setError("");
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, userId, resdata.username)
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, userId)
                 setProfile!(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
             }) 
     }
 
-    async function fetchUser(setter: any) {
-        await SylvesterAPI.get(`/posts/user?id=${userId}`)
-        .then((response) => {
-            console.log(response.data);
-            setter(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
     async function fetchPosts(setter: any) {
         await SylvesterAPI.get(`/posts/user?id=${userId}`)
-        .then((response) => {
-            console.log(response.data);
-            setter(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                console.log(response.data);
+                setter(response.data);
+            }).catch((error) => {
+                console.log(error);
+            });
     }
     
     useEffect( ()=> {
+        fetchUser();
         fetch();
         fetchPosts(setPosts);
     }, []);
@@ -63,26 +65,28 @@ function PublicProfilePage(){
                 </div>
                 <div className="px-3 py-20">
                     <h1 className = "text-lg font-bold">{profile?.displayName}</h1>
-                    <h2>{"@" + profile?.username}</h2>
+                    <h2>{"@" + username}</h2>
                 </div>
             </div>
-            <div className = "flex border-solid border-4 h-full shadow-md bg-white">
+            { profile?.bio != "" ?
+                <div className = "flex border-solid border-4 h-full shadow-md bg-white">
                 {profile?.bio}
-            </div>
+            </div> : <></>
+            }
             <div className="flex border-solid border-4 h-full shadow-md bg-white">
             <ul>
-                <li>
+                { profile?.location != "" ?
+                    <li>
                     <p className='inline-block pr-5'>Location</p>
                     {profile?.location}
-                </li>
-                <li>
+                </li> : <></>
+                }
+                { profile?.occupation != "" ?
+                    <li>
                     <p className='inline-block pr-5'>Occupation</p>
                     {profile?.occupation}
-                </li>
-                <li>
-                    <p className='inline-block pr-5'>Birth Date</p>
-                    {profile?.birthDate}
-                </li>
+                </li> : <></>
+                }
             </ul>
             </div>
 

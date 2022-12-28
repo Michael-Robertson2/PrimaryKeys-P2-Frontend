@@ -14,7 +14,7 @@ function Router(){
             <Route path='/' element={<HomePage />}/>
             <Route path='/feed' element={<FeedPage/>}/>
             <Route path='/profile' element={<ProfilePage />}/>
-            <Route path='/users/:userId' element={<PublicProfilePage />}/>
+            <Route path='/:username' element={<PublicProfilePage />}/>
             <Route path='/login' element={<LoginPage />}/>
             <Route path='/signup' element={<SignupPage />}/>
             <Route path='*' element={<ErrorPage />}/>
