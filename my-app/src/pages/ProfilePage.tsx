@@ -27,7 +27,7 @@ function ProfilePage(){
             .then((response) => {
                 setError("");
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id, resdata.username)
                 setProfile!(temp);
                 changeOnStates(temp);
             }).catch( (error) => {
