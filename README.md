@@ -1,5 +1,5 @@
 
-# Silvester by Team Primary Keys
+# Sylvester by Team Primary Keys
 **[Backend Repository Here](https://github.com/221114-Java-React/PrimaryKeys-P2-Backend)**
 
 ## Problem Statement 
@@ -54,7 +54,7 @@ Paul Franklin
 - [Giphy API](https://developers.giphy.com/docs/api/)
 
 # Project Design Specifications and Documents
-link to erd/relational data model
+[ERD](img/Sylvester-ERD.jpg)
 
 ### User Stories
 User Stories 
