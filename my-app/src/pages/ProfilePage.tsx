@@ -88,30 +88,30 @@ function ProfilePage(){
             <div className="flex flex-row border-solid border-4 h-full shadow-md bg-white">
                 <div>
                     {profile === null ? <UserIcon /> : (
-                    profile.profilePicUrl === null ? <img src="https://vectorified.com/images/twitter-default-icon-25.jpg" /> : <img src={profile.profilePicUrl} />
+                    profilePicUrl === "" ? <UserIcon /> : <img src={profile.profilePicUrl}/>
                     )}
 
-                    <input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.profilePicUrl != null ? profile?.profilePicUrl : "Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
+                    <input className="bg-gray-100 shadow-xl rounded-md" type= "url" placeholder={"Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
                 </div>
-                <div>
-                    <h1><input className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.displayName} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
-                    <h2>{principal?.username}</h2>
+                <div className="px-3 py-20">
+                    <h1 className = "text-lg font-bold"><input className="bg-gray-100 shadow-xl rounded-md" placeholder={"Display Name"} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
+                    <h2>{"@" + principal?.username}</h2>
                 </div>
             </div>
-            <div className = "border-solid border-4 h-full shadow-md bg-white">
-                <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.bio != null ? profile?.bio : "Bio"} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
+            <div className = "flex border-solid border-4 h-full shadow-md bg-white">
+                <textarea className="grow bg-gray-100 shadow-xl rounded-md" maxLength={128} rows={3} placeholder={"Bio"} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
             </div>
-            <div>
+            <div className="flex border-solid border-4 h-full shadow-md bg-white">
             <ul>
                 <li>
                     <p className='inline-block pr-5'>Location</p>
-                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
+                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Location"} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
                 <li>
                     <p className='inline-block pr-5'>Occupation</p>
-                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
+                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Occupation"} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
                 <li>
                     <p className='inline-block pr-5'>Birth Date</p>
-                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.birthDate} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
+                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={"Birth Date"} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
                 </li>
             </ul>
             
@@ -122,9 +122,10 @@ function ProfilePage(){
             </div>
 
             <div className="border-solid border-4 w-full">
-            <ol>
-                <Feed posts={posts} />
-            </ol>
+                <h1 className="text-lg font-bold text-center">Posts</h1>
+                <ol>
+                    <Feed posts={posts} />
+                </ol>
             </div>
         </form>
     );
