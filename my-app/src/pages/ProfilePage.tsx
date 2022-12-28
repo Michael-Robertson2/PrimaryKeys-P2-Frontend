@@ -27,7 +27,7 @@ function ProfilePage(){
             .then((response) => {
                 setError("");
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id, resdata.username)
                 setProfile!(temp);
                 changeOnStates(temp);
             }).catch( (error) => {
@@ -105,10 +105,12 @@ function ProfilePage(){
             <ul>
                 <li>
                     <p className='inline-block pr-5'>Location</p>
-                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.location} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/>
+                </li>
                 <li>
                     <p className='inline-block pr-5'>Occupation</p>
-                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
+                    <input className="bg-gray-100 shadow-xl rounded-md"  placeholder={profile?.occupation} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} />
+                </li>
                 <li>
                     <p className='inline-block pr-5'>Birth Date</p>
                     <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={profile?.birthDate} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
