@@ -27,7 +27,7 @@ function ProfilePage(){
             .then((response) => {
                 setError("");
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id, resdata.username)
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
                 setProfile!(temp);
                 changeOnStates(temp);
             }).catch( (error) => {
@@ -37,12 +37,12 @@ function ProfilePage(){
 
     async function fetchPosts(setter: any) {
         await SylvesterAPI.get(`/posts/user?id=${principal?.id}`)
-        .then((response) => {
-            console.log(response.data);
-            setter(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                console.log(response.data);
+                setter(response.data);
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     async function submit(e: FormEvent) {
@@ -59,7 +59,7 @@ function ProfilePage(){
             headers: {
                 authorization: principal?.token
             }
-        })
+            })
         .then((response) => console.log(response))
         .catch((error)=>console.log(error));
     }
