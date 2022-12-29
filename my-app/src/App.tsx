@@ -9,9 +9,9 @@ function App() {
       <Navbar/>
       <div className='flex-1 flex flex-row'>
 
-        <div className='bg-green-500 w-1/3 overflow-y-aut'></div>
-        <div className='flex-1 w-80'><Router/></div>
-        <div className='bg-blue-500 w-1/3 overflow-y-aut'></div>
+        <div className='bg-slate-400 w-1/3 overflow-y-aut'></div>
+        <div className='bg-slate-200 flex-1 w-80'><Router/></div>
+        <div className='bg-slate-400 w-1/3 overflow-y-aut'></div>
       </div>
     </div>
   );
