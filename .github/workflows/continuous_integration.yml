@@ -20,7 +20,7 @@ jobs:
         working-directory: ./my-app
 
       - name: Build Artifact
-        run: npm run build
+        run: CI=false npm run build
         working-directory: ./my-app
 
       - name: Set AWS Credentials
