@@ -4,7 +4,7 @@ import Post from "./Post";
 
 function Feed(props: any) {
 
-    console.log(props.posts);
+    //console.log(props.posts);
 
     function loop() {
         const cardData = props.posts;

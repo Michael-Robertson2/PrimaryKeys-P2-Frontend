@@ -5,7 +5,7 @@ import MakeComment from "./MakeComment";
 function RepliesSection(props: any){
     // const [replies, setReplies] = useState<[]>([]);
 
-    console.log( props.previousReplies )
+    //console.log( props.previousReplies )
 
     return(
         <div>

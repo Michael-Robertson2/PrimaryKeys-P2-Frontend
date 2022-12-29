@@ -20,7 +20,7 @@ function Post(post: PostContent) {
     }
 
     for (var like of post.likes) {
-        console.log(like);
+        //console.log(like);
     }
 
     // for (like in post.likes) {
@@ -28,9 +28,9 @@ function Post(post: PostContent) {
     // }
 
     async function toggleLike() {
-        console.log(principal?.token);
-        console.log(post.postId);
-        console.log(principal?.id);
+        //console.log(principal?.token);
+        //console.log(post.postId);
+        //console.log(principal?.id);
         if (liked) {
             await SylvesterAPI.delete("/likes?id=" + post.postId, {
                 headers: {

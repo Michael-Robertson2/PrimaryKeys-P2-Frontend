@@ -39,7 +39,7 @@ function PublicProfilePage() {
     async function fetchPosts(setter: any) {
         await SylvesterAPI.get(`/posts/user?id=${userId}`)
             .then((response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 setter(response.data);
             }).catch((error) => {
                 console.log(error);
