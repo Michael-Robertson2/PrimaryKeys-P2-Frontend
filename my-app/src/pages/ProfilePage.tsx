@@ -93,7 +93,7 @@ function ProfilePage(){
 
                     <input className="bg-gray-100 shadow-xl rounded-md" type= "url" placeholder={"Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
                 </div>
-                <div className="px-3 py-20">
+                <div className="flex-col self-center px-3">
                     <h1 className = "text-lg font-bold"><input className="bg-gray-100 shadow-xl rounded-md" placeholder={"Display Name"} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
                     <h2>{"@" + principal?.username}</h2>
                 </div>
