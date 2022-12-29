@@ -21,8 +21,8 @@ function MakeComment(props: any) {
 
     async function submit(e: any) {
         e.preventDefault();
-        console.log(reply);
-        console.log(props.parentId);
+        //console.log(reply);
+        //console.log(props.parentId);
 
         await SylvesterAPI.post("/replies", {
             reply: reply,

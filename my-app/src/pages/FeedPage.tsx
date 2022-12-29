@@ -52,7 +52,7 @@ function FeedPage() {
     async function fetch(setter: any) {
         await SylvesterAPI.get("/posts",{})
         .then((response) => {
-            console.log(response.data);
+            //console.log(response.data);
             setter(response.data);
         }).catch((error) => {
             console.log(error);
