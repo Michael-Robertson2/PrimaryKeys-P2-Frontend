@@ -40,6 +40,8 @@ function MakePost(props: any) {
         .catch((error) => {
             console.log(error);
         });
+
+        setPost("");
     }
 
     function toggleTenor() {
@@ -63,7 +65,7 @@ function MakePost(props: any) {
     <div className="flex flex-col items-center  ">
         <div className="md:flex flex-start pt-8 w-full">
             <div className="block p-6 rounded-lg shadow-lg bg-gray-200  ml-6 mr-6 w-full">
-                <input className="rounded p-1 text-gray-700 mb-6 h-100 w-full" placeholder="Sufferin' succotash, spit it out!" onChange={(e) => setPost(e.target.value)}></input>
+                <input className="rounded p-1 text-gray-700 mb-6 h-100 w-full" placeholder="Sufferin' succotash, spit it out!" value = {post} onChange={(e) => setPost(e.target.value)}></input>
                 
                 {tenorState ? <TenorSearch passData={setTenorUrl}/> : <div></div>}
                 
