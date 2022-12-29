@@ -6,7 +6,7 @@ export const SetPrincipalContext = createContext<Function | null>(null);
 
 function principalCreator(auth: any){
     //takes in json parsed object and returns a Principal instance.
-    const temp = new Principal(auth.userId,  auth.username, auth.email, auth.registered, auth.roleID, auth.token, auth.active);
+    const temp = new Principal(auth.id, auth.username, auth.email, auth.registered, auth.roleID, auth.token, auth.active);
     return temp;
 }
 

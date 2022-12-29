@@ -6,16 +6,13 @@ import SylvesterAPI from '../utils/ApiConfig';
 import { useParams } from "react-router-dom";
 
 
-function PublicProfilePage(){
-    
+function PublicProfilePage() {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [userId, setUserId] = useState<string>("");
     const [error, setError] = useState<string>("");
     const [posts, setPosts] = useState([]);
     const params = useParams();
     const username = params.username;
-
-    console.log(error);
 
     async function fetchUser() {
         await SylvesterAPI.get(`/users/username?username=${username}`)
@@ -27,12 +24,13 @@ function PublicProfilePage(){
             });
     }
     
-    async function fetch() {
+    async function fetch(setter:any) {
         await SylvesterAPI.get(`/profiles/user?id=${userId}`)
             .then((response) => {
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, userId)
-                setProfile(temp);
+                console.log(resdata);
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location, resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, userId)
+                setter!(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
             }) 
@@ -48,13 +46,13 @@ function PublicProfilePage(){
             });
     }
     
-    useEffect(()=> {
+    useEffect(() => {
         fetchUser();
     }, []);
 
     useEffect(() => {
         if(userId) {
-            fetch();
+            fetch(setProfile);
             fetchPosts(setPosts);
         }
     }, [userId]);
