@@ -42,6 +42,7 @@ function MakePost(props: any) {
         });
 
         setPost("");
+        toggleTenor()
     }
 
     function toggleTenor() {
