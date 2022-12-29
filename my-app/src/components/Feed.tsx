@@ -23,7 +23,7 @@ function Feed(props: any) {
                                         cardData[i].username);
 
             cards.push(
-                <div className={ "mt-6 ml-10 mr-6 mb-6 "} key={unique_key}>
+                <div className={ "mt-6 ml-6 mr-6 mb-6 "} key={unique_key}>
                     <Post { ...post } />
                 </div>
             )
