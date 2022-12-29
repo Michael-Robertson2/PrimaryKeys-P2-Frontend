@@ -1,5 +1,6 @@
 import { UserIcon } from "@heroicons/react/24/outline";
 import ReplyContent from "../models/ReplyContent";
+import { Link } from 'react-router-dom';
 
 function Reply(reply: ReplyContent) {
     return (
@@ -9,10 +10,14 @@ function Reply(reply: ReplyContent) {
                 {/* heading */}
                 <div>
                     <UserIcon className="inline-block h-5 pr-2"/>
-                    <a href={ "/" + reply.username } className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { reply.displayName + " @" + reply.username } </a>
+                    <p className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> 
+                    <Link to={ "/" + reply.username }>
+                    { reply.displayName + " @" + reply.username } 
+                    </Link>
+                    </p>
                 </div>
 
-                <a href="#!" className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { reply.replied } </a>
+                <p  className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { reply.replied } </p>
             </div>
 
             <p className="text-gray-700 mb-6 break-all"> {reply.reply} </p>

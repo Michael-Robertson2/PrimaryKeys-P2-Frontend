@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom';
 //import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
+
 
 import PostContent from "../models/PostContent";
 import RepliesSection from "./RepliesSection";
@@ -20,7 +22,7 @@ function Post(post: PostContent) {
     }
 
     for (var like of post.likes) {
-        console.log(like);
+        //console.log(like);
     }
 
     // for (like in post.likes) {
@@ -28,9 +30,9 @@ function Post(post: PostContent) {
     // }
 
     async function toggleLike() {
-        console.log(principal?.token);
-        console.log(post.postId);
-        console.log(principal?.id);
+        //console.log(principal?.token);
+        //console.log(post.postId);
+        //console.log(principal?.id);
         if (liked) {
             await SylvesterAPI.delete("/likes?id=" + post.postId, {
                 headers: {
@@ -63,10 +65,14 @@ function Post(post: PostContent) {
                 {/* heading */}
                 <div>
                     <UserIcon className="inline-block h-5 pr-2"/>
-                    <a href={"/" + post.username} className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.displayName + " @" + post.username } </a>
+                    <p  className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> 
+                    <Link to={"/" + post.username}>
+                    { post.displayName + " @" + post.username } 
+                    </Link>
+                    </p>
                 </div>
 
-                <a href="#!" className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.posted } </a>
+                <p className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.posted } </p>
             </div>
 
             {/* body */}

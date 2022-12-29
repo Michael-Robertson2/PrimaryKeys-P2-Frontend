@@ -12,9 +12,9 @@ function ReplyFeed(props: any) {
 
         for (let i = 0; i < cardData.length; ++i) {
             var unique_key = "uniqueId" + i.toString();
-            console.log("ReplyFeedCard")
-            console.log(cardData[i].replied);
-            console.log("ReplyFeedCard")
+            //console.log("ReplyFeedCard")
+            //console.log(cardData[i].replied);
+            //console.log("ReplyFeedCard")
             var reply = new ReplyContent(cardData[i].replyId, 
                                         cardData[i].replied,
                                         cardData[i].reply,
@@ -22,7 +22,7 @@ function ReplyFeed(props: any) {
                                         cardData[i].displayName,
                                         cardData[i].username);
             
-            console.log(reply)
+            //console.log(reply)
             cards.push(
                 <div className={ "mt-6 ml-10 mr-6 mb-6 "} key={unique_key} >
                     <Reply { ...reply } />
