@@ -63,7 +63,7 @@ function Post(post: PostContent) {
                 {/* heading */}
                 <div>
                     <UserIcon className="inline-block h-5 pr-2"/>
-                    <a href="#!" className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.displayName + " @" + post.username } </a>
+                    <a href={"/" + post.username} className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.displayName + " @" + post.username } </a>
                 </div>
 
                 <a href="#!" className="font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> { post.posted } </a>
