@@ -30,10 +30,9 @@ function PublicProfilePage(){
     async function fetch() {
         await SylvesterAPI.get(`/profiles/user?id=${userId}`)
             .then((response) => {
-                setError("");
                 let resdata = response.data;
                 let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, userId)
-                setProfile!(temp);
+                setProfile(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
             }) 
@@ -49,11 +48,16 @@ function PublicProfilePage(){
             });
     }
     
-    useEffect( ()=> {
+    useEffect(()=> {
         fetchUser();
-        fetch();
-        fetchPosts(setPosts);
     }, []);
+
+    useEffect(() => {
+        if(userId) {
+            fetch();
+            fetchPosts(setPosts);
+        }
+    }, [userId]);
 
     return (
         <div>
@@ -63,7 +67,7 @@ function PublicProfilePage(){
                     profile.profilePicUrl === "" ? <UserIcon /> : <img src={profile.profilePicUrl}/>
                     )}
                 </div>
-                <div className="px-3 py-20">
+                <div className="flex-col self-center px-3">
                     <h1 className = "text-lg font-bold">{profile?.displayName}</h1>
                     <h2>{"@" + username}</h2>
                 </div>
