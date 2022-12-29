@@ -6,29 +6,26 @@ import Feed from "../components/Feed";
 import SylvesterAPI from '../utils/ApiConfig';
 
 
-function ProfilePage(){
-    
+function ProfilePage() {
     const [profile, setProfile] = useState<Profile | null>(null);
-    const [displayName, setDisplayName] = useState<string | undefined>("");
-    const [birthDate, setBirthDate] = useState<string | undefined>("");
-    const [occupation, setOccupation] = useState<string | undefined>("");
-    const [location, setLocation] = useState<string | undefined>("");
-    const [bio, setBio] = useState<string | undefined>("");
-    const [profilePicUrl, setProfilePicUrl] = useState<string | undefined>("");
-    const [error, setError] = useState<string | undefined>("");
+    const [displayName, setDisplayName] = useState<string>("");
+    const [birthDate, setBirthDate] = useState<string>("");
+    const [occupation, setOccupation] = useState<string>("");
+    const [location, setLocation] = useState<string>("");
+    const [bio, setBio] = useState<string>("");
+    const [profilePicUrl, setProfilePicUrl] = useState<string>("");
+    const [error, setError] = useState<string>("");
     const principal = useContext(PrincipalContext);
     const [hasUpdates, setHasUpdates] = useState<boolean>(false);
     const [posts, setPosts] = useState([]);
-
-    console.log(error);
     
-    async function fetch() {
+    async function fetch(setter:any) {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
             .then((response) => {
-                setError("");
                 let resdata = response.data;
-                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location,resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
-                setProfile!(temp);
+                console.log(resdata);
+                let temp = new Profile(resdata.profileId, resdata.displayName, resdata.location, resdata.birthDate,resdata.occupation, resdata.bio, resdata.profilePicUrl, principal?.id)
+                setter!(temp);
                 changeOnStates(temp);
             }).catch( (error) => {
                 setError(error.response.data.message);
@@ -59,13 +56,13 @@ function ProfilePage(){
             headers: {
                 authorization: principal?.token
             }
-            })
+        })
         .then((response) => console.log(response))
         .catch((error)=>console.log(error));
     }
     
-    useEffect( ()=> {
-        fetch();
+    useEffect( () => {
+        fetch(setProfile);
         fetchPosts(setPosts);
     }, []);
 
@@ -81,8 +78,8 @@ function ProfilePage(){
         setLocation(profile.location);
         setBio(profile.bio);
         setProfilePicUrl(profile.profilePicUrl);
-}
-
+    }
+    
     return (
         <form onSubmit={(e)=>submit(e)} >
             <div className="flex flex-row border-solid border-4 h-full shadow-md bg-white">
@@ -91,27 +88,27 @@ function ProfilePage(){
                     profilePicUrl === "" ? <UserIcon /> : <img src={profile.profilePicUrl}/>
                     )}
 
-                    <input className="bg-gray-100 shadow-xl rounded-md" type= "url" placeholder={"Profile Pic URL"} value={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
+                    <input className="bg-gray-100 shadow-xl rounded-md" type= "url" placeholder={"Profile Pic URL"} defaultValue={profilePicUrl} onChange={(e)=>registerChange(setProfilePicUrl, e.target.value)} />
                 </div>
                 <div className="flex-col self-center px-3">
-                    <h1 className = "text-lg font-bold"><input className="bg-gray-100 shadow-xl rounded-md" placeholder={"Display Name"} value={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
+                    <h1 className = "text-lg font-bold"><input className="bg-gray-100 shadow-xl rounded-md" placeholder={"Display Name"} defaultValue={displayName} onChange={(e)=>registerChange(setDisplayName, e.target.value)} /></h1>
                     <h2>{"@" + principal?.username}</h2>
                 </div>
             </div>
             <div className = "flex border-solid border-4 h-full shadow-md bg-white">
-                <textarea className="grow bg-gray-100 shadow-xl rounded-md" maxLength={128} rows={3} placeholder={"Bio"} value={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
+                <textarea className="grow bg-gray-100 shadow-xl rounded-md" maxLength={128} rows={3} placeholder={"Bio"} defaultValue={bio} onChange={(e)=>registerChange(setBio, e.target.value)}/>
             </div>
             <div className="flex border-solid border-4 h-full shadow-md bg-white">
             <ul>
                 <li>
                     <p className='inline-block pr-5'>Location</p>
-                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Location"} value={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
+                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Location"} defaultValue={location} onChange={(e)=>registerChange(setLocation, e.target.value)}/></li>
                 <li>
                     <p className='inline-block pr-5'>Occupation</p>
-                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Occupation"} value={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
+                    <input className="grow bg-gray-100 shadow-xl rounded-md"  placeholder={"Occupation"} defaultValue={occupation} onChange={(e)=>registerChange(setOccupation, e.target.value)} /></li>
                 <li>
                     <p className='inline-block pr-5'>Birth Date</p>
-                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={"Birth Date"} value={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
+                    <input type="date" className="bg-gray-100 shadow-xl rounded-md" placeholder={"Birth Date"} defaultValue={birthDate} onChange={(e)=>registerChange(setBirthDate, e.target.value)} />
                 </li>
             </ul>
             </div>
