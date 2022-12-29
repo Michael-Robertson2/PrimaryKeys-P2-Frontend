@@ -31,4 +31,4 @@ jobs:
           aws-region: us-east-1
           
       - name: Deploy to S3
-        run: aws s3 sync ./build/. s3://sylvester-welcome
+        run: aws s3 sync ./my-app/build/. s3://sylvester-welcome
