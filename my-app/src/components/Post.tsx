@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
-//import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
+import { HandThumbUpIcon as HandThumbUpIcon2 } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
 
 
@@ -10,6 +10,7 @@ import PostContent from "../models/PostContent";
 import RepliesSection from "./RepliesSection";
 import { PrincipalContext } from "../context/PrincipalProvider";
 import SylvesterAPI from "../utils/ApiConfig";
+import LikeContent from "../models/likeContent";
 
 function Post(post: PostContent) {
     const [liked, setLiked] = useState<boolean>(false);
@@ -17,22 +18,16 @@ function Post(post: PostContent) {
 
     const principal = useContext(PrincipalContext);
 
+    useEffect(() => {
+        setLiked(iLiked());
+    }, []);
+
     function handleShowReplyToggle(){
         setShowReplies(!showReplies);
     }
 
-    for (var like of post.likes) {
-        //console.log(like);
-    }
-
-    // for (like in post.likes) {
-    //     if (principal?.id === like.)
-    // }
-
     async function toggleLike() {
-        //console.log(principal?.token);
-        //console.log(post.postId);
-        //console.log(principal?.id);
+        console.log("toggleLike called")
         if (liked) {
             await SylvesterAPI.delete("/likes?id=" + post.postId, {
                 headers: {
@@ -56,13 +51,24 @@ function Post(post: PostContent) {
         }
     }
 
+    function iLiked() {
+        for (let like of post.likes) {
+            console.log("inside for loop")
+            let tmp = like as LikeContent;
+            if (principal && principal?.username === tmp.username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     return (
 
         <div className="block p-6 rounded-lg shadow-lg bg-gray-100">
             {/* Content */}
             <div className="flex justify-between mb-4">
 
-                {/* heading */}
+                {/* head */}
                 <div>
                     <UserIcon className="inline-block h-5 pr-2"/>
                     <p  className="inline-block font-medium text-teal-600 hover:text-teal-900 focus:text-slate-400 duration-300 transition ease-in-out text-sm"> 
@@ -84,10 +90,15 @@ function Post(post: PostContent) {
             <div>
                 {/* Interaction */}
                 <div className="flex justify-end">
+                    {post.replies.length + " "}
                     <PencilSquareIcon onClick={handleShowReplyToggle} className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out"/>
                 
                     {post.likes.length + " "}
-                    <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/>            
+                    {
+                        liked ?
+                        <HandThumbUpIcon className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/> :
+                        <HandThumbUpIcon2 className="inline-block h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick = {(e) => (toggleLike())}/>
+                    }
                 </div>
             </div>
 
