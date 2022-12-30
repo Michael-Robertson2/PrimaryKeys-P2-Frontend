@@ -11,21 +11,8 @@ function MakeComment(props: any) {
     const [tenorState, setTenorState] = useState<boolean>(false);
     const principal = useContext(PrincipalContext); 
 
-    //request comments from parent post
-    // async function buttonClick(){
-    //     //send request with {property.parentId} to replies endpoint
-    //     await SylvesterAPI.get("/replies/post?id=f6944fd0-5054-457c-8d58-1602dcadc8c0",{
-    //     }).then((response)=>{
-    //         console.log(response);
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //     });
-    // }
-
     async function submit(e: any) {
         e.preventDefault();
-        //console.log(reply);
-        //console.log(props.parentId);
 
         await SylvesterAPI.post("/replies", {
             reply: reply,
