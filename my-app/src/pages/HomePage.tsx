@@ -11,7 +11,7 @@ function HomePage() {
     }, []);
 
     useEffect(() => {
-        let intervalId = setInterval(fetch , 5000, setPosts );
+        let intervalId = setInterval(fetch , 1000, setPosts );
         return () => { clearInterval(intervalId) }
     }, []);
 
