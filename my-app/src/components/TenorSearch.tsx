@@ -64,14 +64,14 @@ function TenorSearch (props: any) {
 
     return (
         <div>
-            <div className="flex flex-col rounded bg-gray-100 shadow-md w-full" >
-                <input className="bg-gray-100 rounded-md border-2 w-full" 
-                    placeholder="Enter Search Terms..."
+            <div className="flex flex-col  rounded shadow-md w-full" >
+                <input className="p-1 bg-gray-100 mb-2 rounded-md " 
+                    placeholder="Enter Search Terms... "
                     onChange = {(e) => searchTenor(e.target.value)}/>
                 
-                <input className="bg-gray-100 rounded-md border-2 w-full"
+                <input className="p-1 bg-gray-100 rounded-md "
                     id = "unique_id_019876091287"
-                    placeholder= "Enter Image URL..."
+                    placeholder= "(or) Enter Image URL..."
                     value = {imgUrl}
                     onChange = {(e) => setImgUsingUrl(e.target.value)}/>
             </div>

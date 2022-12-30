@@ -21,7 +21,7 @@ function Reply(reply: ReplyContent) {
             </div>
 
             <p className="text-gray-700 mb-6 break-all"> {reply.reply} </p>
-            <img src = { reply.imgUrl } alt = ""/>
+            <img className="sm rounded-lg" src = { reply.imgUrl }/>
         </div>
     )
 }

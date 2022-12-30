@@ -79,7 +79,7 @@ function Post(post: PostContent) {
             {/* body */}
             <div>
                 <p className="text-gray-700 mb-6 break-all"> {post.content} </p>
-                    <img src = { post.imgUrl } alt = ""/>
+                    <img className="rounded-lg " src = { post.imgUrl } alt = ""/>
             </div>
 
             <div>
