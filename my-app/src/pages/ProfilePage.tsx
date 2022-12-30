@@ -19,6 +19,15 @@ function ProfilePage() {
     const [hasUpdates, setHasUpdates] = useState<boolean>(false);
     const [posts, setPosts] = useState([]);
     
+    function changeOnStates(profile:any) {
+        setDisplayName(profile.displayName);
+        setBirthDate(profile.birthDate);
+        setOccupation(profile.occupation);
+        setLocation(profile.location);
+        setBio(profile.bio);
+        setProfilePicUrl(profile.profilePicUrl);
+    }
+    
     async function fetch(setter:any) {
         await SylvesterAPI.get(`/profiles/user?id=${principal?.id}`)
             .then((response) => {
@@ -71,14 +80,6 @@ function ProfilePage() {
         setHasUpdates(true);
     }
 
-    function changeOnStates(profile:any) {
-        setDisplayName(profile.displayName);
-        setBirthDate(profile.birthDate);
-        setOccupation(profile.occupation);
-        setLocation(profile.location);
-        setBio(profile.bio);
-        setProfilePicUrl(profile.profilePicUrl);
-    }
     
     return (
         <form onSubmit={(e)=>submit(e)} >
