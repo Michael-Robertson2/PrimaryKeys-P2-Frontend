@@ -1,8 +1,8 @@
 import { GifIcon } from '@heroicons/react/24/outline'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 
-import { useState } from "react";
-// import { PrincipalContext, SetPrincipalContext } from '../context/PrincipalProvider';
+import { useState, useContext } from "react";
+import { PrincipalContext } from '../context/PrincipalProvider';
 import SylvesterAPI from '../utils/ApiConfig';
 
 import TenorSearch from "./TenorSearch";
@@ -11,26 +11,19 @@ function MakePost(props: any) {
     const [post, setPost] = useState<string>("");
     const [tenorState, setTenorState] = useState<boolean>(false);
     const [tenorUrl, setTenorUrl] = useState<string>("");
+    const principal = useContext(PrincipalContext); 
 
     async function submit() {
-        var auth = window.sessionStorage.getItem("auth"); //TODO: Remove sessionStorage reliance and use PrincipalContext
-        if (auth) {
-            var json = JSON.parse(auth);
-        } else {
-            return;
-        }
-
         await SylvesterAPI.post("posts", {
             content: post,
             imgUrl: tenorUrl
         }, {
             headers: {
-                authorization: json["token"]
+                authorization: principal?.token
             }
         })
         .then((response) => {
             console.log(response);
-            // props.functionOnSubmit();
         })
         .catch((error) => {
             console.log(error);
