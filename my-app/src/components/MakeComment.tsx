@@ -51,7 +51,7 @@ function MakeComment(props: any) {
 
     return (
         <form className="block p-6 rounded-lg shadow-lg bg-gray-200 w-full">
-            <input className="w-full mb-6" placeholder="I tawt I taw a puddy tat!" value={ reply } onChange={(e) => setReply(e.target.value)}></input>
+            <input className="w-full mb-6 p-1 rounded" placeholder="I tawt I taw a puddy tat!" value={ reply } onChange={(e) => setReply(e.target.value)}></input>
             
             {tenorState ? <TenorSearch passData={setTenorUrl}/> : <div></div>}
 
