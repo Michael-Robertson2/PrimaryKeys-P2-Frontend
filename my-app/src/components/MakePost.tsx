@@ -13,11 +13,6 @@ function MakePost(props: any) {
     const [tenorUrl, setTenorUrl] = useState<string>("");
 
     async function submit() {
-        // setMyTenorUrl();
-        console.log("Attempting to submit...");
-        console.log(post);
-        console.log(tenorUrl);
-        console.log(window.sessionStorage.getItem("auth")); 
         var auth = window.sessionStorage.getItem("auth"); //TODO: Remove sessionStorage reliance and use PrincipalContext
         if (auth) {
             var json = JSON.parse(auth);
@@ -49,19 +44,6 @@ function MakePost(props: any) {
         setTenorState(!tenorState);
     }
 
-    /*
-    function setMyTenorUrl() {
-        var url = document.getElementById("unique_id_019876091287")?.getAttribute("value");
-        console.log("Setter");
-        console.log(url);
-        if (url) {
-            setTenorUrl(url);
-        } else {
-            setTenorUrl("");
-        }
-    }
-    */
-
     return (
     <div className="flex flex-col items-center  ">
         <div className="md:flex flex-start pt-8 w-full">
@@ -70,7 +52,7 @@ function MakePost(props: any) {
                 
                 {tenorState ? <TenorSearch passData={setTenorUrl}/> : <div></div>}
                 
-                <div className="border-double border-4  flex justify-end">
+                <div className="border-double border-4 flex justify-end">
                     <GifIcon className="h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick={toggleTenor}/>
                     <PencilSquareIcon className="h-6 pr-2 hover:opacity-40 transition duration-150 ease-in-out" onClick={submit}/>
                 </div>

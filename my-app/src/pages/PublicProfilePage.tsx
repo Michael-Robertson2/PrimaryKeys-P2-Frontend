@@ -62,7 +62,7 @@ function PublicProfilePage() {
             <div className="flex flex-row border-solid border-4 h-full shadow-md bg-white">
                 <div>
                     {profile === null ? <UserIcon /> : (
-                    profile.profilePicUrl === "" ? <UserIcon /> : <img src={profile.profilePicUrl}/>
+                    profile.profilePicUrl === "" ? <UserIcon /> : <img src={profile.profilePicUrl} alt=""/>
                     )}
                 </div>
                 <div className="flex-col self-center px-3">
@@ -70,20 +70,20 @@ function PublicProfilePage() {
                     <h2>{"@" + username}</h2>
                 </div>
             </div>
-            { profile?.bio != "" ?
+            { profile?.bio !== "" ?
                 <div className = "flex border-solid border-4 h-full shadow-md bg-white">
                 {profile?.bio}
             </div> : <></>
             }
             <div className="flex border-solid border-4 h-full shadow-md bg-white">
             <ul>
-                { profile?.location != "" ?
+                { profile?.location !== "" ?
                     <li>
                     <p className='inline-block pr-5'>Location</p>
                     {profile?.location}
                 </li> : <></>
                 }
-                { profile?.occupation != "" ?
+                { profile?.occupation !== "" ?
                     <li>
                     <p className='inline-block pr-5'>Occupation</p>
                     {profile?.occupation}

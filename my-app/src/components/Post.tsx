@@ -19,8 +19,14 @@ function Post(post: PostContent) {
     const principal = useContext(PrincipalContext);
 
     useEffect(() => {
-        setLiked(iLiked());
-    }, []);
+        setLiked(false);
+        for (let like of post.likes) {
+            let tmp = like as LikeContent;
+            if (principal && principal?.username === tmp.username) {
+                setLiked(true);
+            }
+        }
+    }, [post.likes, principal]);
 
     function handleShowReplyToggle(){
         setShowReplies(!showReplies);
@@ -49,17 +55,6 @@ function Post(post: PostContent) {
             setLiked(true);
             console.log("I like");
         }
-    }
-
-    function iLiked() {
-        for (let like of post.likes) {
-            console.log("inside for loop")
-            let tmp = like as LikeContent;
-            if (principal && principal?.username === tmp.username) {
-                return true;
-            }
-        }
-        return false;
     }
 
     return (
